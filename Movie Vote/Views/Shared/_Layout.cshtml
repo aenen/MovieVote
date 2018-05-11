@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title ◎ Movie Vote</title>
+    <link rel="icon" href="~/Content/favicon.png" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/icomoon/style.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <a href="@Url.Action("Index", "Home")" class="navbar navbar-inverse navbar-fixed-top text-center">
+        <span id="logo">Ｍｏｖｉｅ Ｖｏｔｅ</span>
+        <img id="loading" hidden src="~/Content/loading.gif" />
+    </a>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Ярославчик Інкорпорейтед</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts")
+</body>
+</html>

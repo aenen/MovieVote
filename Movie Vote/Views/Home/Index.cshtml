@@ -1,0 +1,221 @@
+﻿@using Movie_Vote_Data.BusinessLayer
+@model IEnumerable<Movie_Vote_Data.DbLayer.Movie>
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.Title = "Головна";
+    UserVote uv = HttpContext.Current.Session["UserVote"] as UserVote;
+}
+
+<div id="hello" class="section-white">
+    <div class="container body-content">
+        <h2>Переглянуті мною фільми</h2>
+        <h5>Голосуй за найкращий!</h5>
+    </div>
+</div>
+<div id="data-section" class="section-dot">
+    <div class="container body-content">
+        <div id="data" class="row">
+            @foreach (var item in Model)
+            {
+                <div class="container col-md-4 col-sm-6">
+                    <div data-id="@item.Id" data-type="@item.Extras" class="panel panel-movie no-init panel-default">
+                        <div class="panel-heading ">
+                            <div class="one-line">
+                                <span class="badge rate pull-right">@item.Rate</span>
+                                @{
+                                    if (item.IsFavorite)
+                                    {
+                                        <span class="glyphicon glyphicon-star pull-right" style="margin-right:5px; color:red"></span>
+                                    }
+                                }
+                                <span>@item.Name</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="display-wrapper">
+                                <img class="img-medium movie-poster" src="~/Content/loading_dark.gif" />
+                                <div class="movie-info">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">Назва:</div>
+                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-name">-</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">Реліз:</div>
+                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-release">-</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">Жанри:</div>
+                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-genre">-</div>
+                                    </div>
+                                    <div class="description-wrapper">
+                                        <hr />
+                                        <div class="movie-description"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-wrapper text-center" style="margin-top:10px">
+                                <button class="btn btn-danger vote">
+                                    <span class="glyphicon glyphicon-heart"></span>
+                                </button>
+                                <button class="btn btn-info info">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                </button>
+                                @{if (item.Extras == "tv")
+                                    {
+                                        <span class="type t-tv">Серіал</span>
+                                    }
+                                    else if (item.Extras == "movie")
+                                    {
+                                        <span class="type t-movie">Фільм</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                    }
+        </div>
+        @{ int pages = (int)ViewBag.Pages;
+            if (pages > 1)
+            {
+                <div class="text-center">
+                    <div class="row">
+                        <button id="load-more" class="btn btn-lg btn-primary">Завантажити ще</button>
+                    </div>
+                    <ul class="pagination text-center">
+                        <li class="active"><a class="page" data-page="1">1</a></li>
+                        @for (int i = 2; i <= pages; i++)
+                {
+                            <li style="cursor: pointer"><a class="page" data-page="@i">@i</a></li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/NoRazor.js"></script>
+
+    <script>
+        var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
+        $(".panel-movie").each(function (index, element) {
+            var id = GetId(this);
+            var self = this;
+            for (var i in votedMov){
+                if (votedMov[i] == id){
+                    $(element).removeClass("panel-default").addClass("panel-danger").find(".vote").addClass("active");
+                }
+            }
+        });
+        
+        var totalPages = $(".pagination li").length;
+        $("#load-more").click(function(e){
+            if ($(this).hasClass("disabled"))
+                return false;
+
+            var self=this;
+            var hasActive=false;
+            $(".pagination li").each(function(index, element){
+                hasActive=$(element).hasClass("active")?true:hasActive;
+                if (!$(element).hasClass("active") && hasActive){
+                    var loadPage=$(element).children().first().attr("data-page");
+                    $("#logo").hide();
+                    $("#loading").show();
+                    $("#load-more").addClass("disabled");
+                    $.ajax({ type: "GET",
+                        url: '@Url.Action("Page", "Home")?page=' + loadPage,
+                        success : function(text)
+                        {
+                            $('#data').append(text);
+                            $(element).addClass("active");
+                            if(index==totalPages-1)
+                                $(self).hide();
+                            $("#loading").hide();
+                            $("#logo").show();
+                            $("#load-more").removeClass("disabled");
+                        }
+                    });
+                    return false;
+                }
+            });
+        });
+
+        $(".page").click(function(e) {
+            if ($(this).parent().hasClass("active"))
+                return false;
+
+            var pg = $(this).attr("data-page");
+            var self = this;
+            $("#logo").hide();
+            $("#loading").show();
+            $("#load-more").addClass("disabled");
+            $('html, body').animate({scrollTop:$('#data-section').position().top-50}, 'slow');
+            $("#data").load('@Url.Action("Page", "Home")?page=' + pg, function() {
+                $("#loading").hide();
+                $("#logo").show();
+                $(".page").each(function(i, el){
+                    var parent=$(el).parent();
+                    if ($(parent).hasClass("active"))
+                        $(parent).removeClass("active").css("cursor", "pointer");
+                    if (self==el){
+                        $(parent).addClass("active").css("cursor", "");
+                        if (i==totalPages-1)
+                            $("#load-more").hide();
+                        else
+                            $("#load-more").show();
+                    }
+                });
+                $("#load-more").removeClass("disabled");
+            });
+        })
+        var initElements=function(){
+            var aniDone = true;
+            $(".info:not(.clickadded)").click(function (e) {
+                if (!aniDone) return false;
+                var panel = $(this).closest(".panel-movie");
+                var poster = panel.find(".movie-poster");
+                var info = panel.find(".movie-info");
+
+                aniDone = false;
+                $(this).toggleClass("active");
+                if ($(info).css("opacity") == 0) {
+                    poster.css("filter", "blur(5px)");
+                    info.show().animate({ "opacity": 1 }, 500, function () { aniDone = true; });
+                } else {
+                    poster.css("filter", "blur(0px)");
+                    info.animate({ "opacity": 0 }, 500, function () { info.hide(); aniDone = true });
+                }
+            }).addClass("clickadded");
+
+            $(".vote:not(.clickadded)").click(function (e) {
+                var id = GetId(this);
+                var self = this;
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Vote","Home")",
+                    data: { id: id },
+                    success: function (data) {
+                        var panel = $(".panel-movie[data-id="+id+"]");
+                        if (panel.hasClass("panel-default")){
+                            $(self).addClass("active");
+                            $(".panel-movie[data-id="+id+"]").removeClass("panel-default").addClass("panel-danger").find(".rate").text(data);
+                        }
+                        else{
+                            $(self).removeClass("active");
+                            $(".panel-movie[data-id="+id+"]").removeClass("panel-danger").addClass("panel-default").find(".rate").text(data);
+                        }
+                    }
+                });
+            }).addClass("clickadded");
+        };
+        $(function(){
+            initElements();
+        });
+    </script>
+}

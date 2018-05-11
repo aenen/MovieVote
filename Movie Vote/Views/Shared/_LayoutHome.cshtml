@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Vote</title>
+    <link rel="icon" href="~/Content/favicon.png" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/icomoon/style.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <a href="@Url.Action("Index", "Home")" class="navbar navbar-inverse navbar-fixed-top text-center">
+        <span id="logo">Ｍｏｖｉｅ Ｖｏｔｅ</span>
+        <img id="loading" hidden src="~/Content/loading.gif" />
+    </a>
+
+    <div>
+        @RenderBody()
+        <footer class="container body-content">
+            <div class="row">
+                <div class="container col-md-4">
+                    <h3>Я тут</h3>
+                    <div class="social-media">
+                        <a target="_blank" href="https://github.com/aenen" class="icon-github"></a>
+                        @*<a class="icon-twitter"></a>
+                            <a class="icon-instagram"></a>
+                            <a class="icon-google-plus"></a>
+                            <a class="icon-soundcloud"></a>
+                            <a class="icon-envelop"></a>*@
+                    </div>
+                </div>
+                <div class="container col-md-4 ">
+                    <h3>Подяки</h3>
+                    <div class="cred cred-others">
+                        <a target="_blank" href="https://icons8.com/icon/51392/Retro-TV">Icon8 за іконку сайту</a>
+                        <a target="_blank" href="https://www.microsoft.com">Microsoft за Visual Studio, .Net та Azure</a>
+                        <a target="_blank" href="https://itstep.org/">IT Step за аккаунт в Microsoft Imagine</a>
+                        @*<a target="_blank" href="https://www.kickstarter.com/">Kickstarter за те, що зробив це можливим</a>*@
+                    </div>
+                </div>
+                <div class="container col-md-4 ">
+                    <h3>Особлива подяка</h3>
+                    <a target="_blank" href="https://www.themoviedb.org">
+                        <img class="cred cred-tmdb" src="https://www.themoviedb.org/assets/static_cache/27b65cb40d26f78354a4ac5abf87b2be/images/v4/logos/powered-by-rectangle-green.svg" />
+                    </a>
+                </div>
+            </div>
+            <p>&copy; 2017 - @DateTime.Now.Year ♥ Ярославчик Інкорпорейтед</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts")
+</body>
+</html>
