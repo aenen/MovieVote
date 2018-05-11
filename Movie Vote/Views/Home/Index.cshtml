@@ -7,10 +7,53 @@
     UserVote uv = HttpContext.Current.Session["UserVote"] as UserVote;
 }
 
-<div id="hello" class="section-white">
+<div class="section-white">
     <div class="container body-content">
-        <h2>Переглянуті мною фільми</h2>
-        <h5>Голосуй за найкращий!</h5>
+        <div>
+            <h2>Переглянуті мною фільми</h2>
+            <h5>Голосуй за найкращий!</h5>
+        </div>
+    </div>
+</div>
+<div id="data-section" class="section-filter" hidden>
+    <div class="container body-content">
+        <div id="filter">
+            <div class="filter-header text-center">
+                Фільтри
+            </div>
+            <div class="container text-center row">
+                <div class="col-sm-3">
+                    Додано
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">Нові</a>
+                        <a href="#" class="list-group-item">Давні</a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    Тип
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">Всі</a>
+                        <a href="#" class="list-group-item">Фільми</a>
+                        <a href="#" class="list-group-item">Серіали</a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    Рейтинг
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">Всі</a>
+                        <a href="#" class="list-group-item">Високий</a>
+                        <a href="#" class="list-group-item">Низький</a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    Додатково
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">Ярославчик рекомендує</a>
+                        <a href="#" class="list-group-item">Мої сердечка</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div id="data-section" class="section-dot">
@@ -113,7 +156,7 @@
                 }
             }
         });
-        
+
         var totalPages = $(".pagination li").length;
         $("#load-more").click(function(e){
             if ($(this).hasClass("disabled"))
