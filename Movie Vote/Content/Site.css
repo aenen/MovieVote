@@ -19,30 +19,63 @@ textarea {
 
 .section-filter {
     background-color: #e7e2e7;
-    padding: 15px 0;
+    border-top: 1px solid rgba(92,62,92,0.2);
 }
 
     .section-filter .list-group-item {
-        font-size: 15px;
+        font-size: 13px;
         border: 0;
+        cursor: pointer;
     }
 
         .section-filter .list-group-item:not(.active) {
             background-color: #e7e2e7;
         }
 
-#filter {
-    /*background-color: #e7e2e7;
-    color:white;*/
-    /*font-weight:500;*/
-    font-size: 18px;
-    color: rgb(92, 62, 92);
-}
+        .section-filter .list-group-item:hover:not(.active) {
+            background-color: #dcd1dc;
+        }
+
+    .section-filter .filter-body {
+        overflow: hidden;
+        display: none;
+        font-size: 18px;
+        /*max-height: 0;*/
+        /*transition: max-height .2s ease-out;*/
+    }
+
+        .section-filter .filter-body .filter-item-header {
+            font-size: 19px;
+            color: rgb(92, 62, 92);
+        }
+
+        .section-filter .filter-body.row {
+            margin-bottom: 0;
+        }
 
 .filter-header {
     cursor: pointer;
     font-size: 20px;
+    padding: 15px 0;
+    transition: .4s;
 }
+
+    .filter-header:not(.active):after {
+        font-size:15px;
+        font-family: "Glyphicons Halflings";
+        content: "\e114";
+    }
+
+    .filter-header.active {
+        border-bottom: 1px solid rgba(92,62,92,0.2);
+        margin-bottom: 15px;
+    }
+
+        .filter-header.active:after {
+            font-size: 15px;
+            font-family: "Glyphicons Halflings";
+            content: "\e113";
+        }
 
 h2 {
     font-size: 25px;
@@ -232,9 +265,6 @@ a.navbar, a.navbar:hover, a.navbar:active, a.navbar:visited, a.navbar:focus {
 @media only screen and (max-device-width: 480px) {
     .display-wrapper {
         height: 300px;
-    }
-
-    .description-wrapper {
     }
 
     .img-medium {
