@@ -19,37 +19,37 @@
     <div class="container body-content">
         <div id="filter">
             <div class="filter-header text-center">
-                Фільтри
+                Фільтри 
             </div>
-            <div class="container text-center row">
+            <div class="text-center row filter-body">
                 <div class="col-sm-3">
-                    Додано
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Нові</a>
-                        <a href="#" class="list-group-item">Давні</a>
+                    <span class="filter-item-header">Додано:</span>
+                    <div data-filter-type="date" class="list-group">
+                        <a data-value="new" class="list-group-item active">Нові</a>
+                        <a data-value="old" class="list-group-item">Давні</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    Тип
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Всі</a>
-                        <a href="#" class="list-group-item">Фільми</a>
-                        <a href="#" class="list-group-item">Серіали</a>
+                    <span class="filter-item-header">Тип:</span>
+                    <div data-filter-type="type" class="list-group">
+                        <a data-value="all" class="list-group-item active">Всі</a>
+                        <a data-value="movie" class="list-group-item">Фільми</a>
+                        <a data-value="tv" class="list-group-item">Серіали</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    Рейтинг
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Всі</a>
-                        <a href="#" class="list-group-item">Високий</a>
-                        <a href="#" class="list-group-item">Низький</a>
+                    <span class="filter-item-header">Рейтинг:</span>
+                    <div data-filter-type="rate" class="list-group">
+                        <a data-value="all" class="list-group-item active">Всі</a>
+                        <a data-value="hight" class="list-group-item">Високий</a>
+                        <a data-value="low" class="list-group-item">Низький</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    Додатково
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">Ярославчик рекомендує</a>
-                        <a href="#" class="list-group-item">Мої сердечка</a>
+                    <span class="filter-item-header">Додатково:</span>
+                    <div data-filter-type="extra" class="list-group">
+                        <a data-value="favorite" class="list-group-item">Ярославчик рекомендує</a>
+                        <a data-value="my-heart" class="list-group-item">Мої сердечка</a>
                     </div>
                 </div>
             </div>
@@ -144,6 +144,19 @@
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/NoRazor.js"></script>
+
+    <script>
+        $(".filter-header").click(function (e) {
+            var self = this;
+            var filterBody = $(".filter-body");
+            
+            if (filterBody.is(":animated"))
+                return false;
+            
+            $(this).toggleClass("active");
+            filterBody.slideToggle();
+        });
+    </script>
 
     <script>
         var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
