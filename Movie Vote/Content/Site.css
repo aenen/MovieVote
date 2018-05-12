@@ -69,6 +69,8 @@ textarea {
     .filter-header.active {
         border-bottom: 1px solid rgba(92,62,92,0.2);
         margin-bottom: 15px;
+        background: -webkit-linear-gradient(left, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
+        background: linear-gradient(to right, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
     }
 
         .filter-header.active:after {
@@ -222,13 +224,22 @@ h2 {
 }
 
 .navbar {
+    background: -webkit-linear-gradient(bottom, rgb(22, 2, 22), rgb(92, 62, 92));
     background: linear-gradient(to top, rgb(22, 2, 22), rgb(92, 62, 92));
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center; /* Vertical center alignment */
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center; /* Horizontal center alignment */
     border: none;
     font-size: 20px;
+    -webkit-backface-visibility: hidden;
 }
+	
 
 a.navbar, a.navbar:hover, a.navbar:active, a.navbar:visited, a.navbar:focus {
     text-decoration: none;
