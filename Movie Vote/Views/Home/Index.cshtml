@@ -15,23 +15,23 @@
         </div>
     </div>
 </div>
-<div id="data-section" class="section-filter" hidden>
+<div id="data-section" class="section-filter">
     <div class="container body-content">
         <div id="filter">
             <div class="filter-header text-center">
-                Фільтри 
+                Фільтри
             </div>
             <div class="text-center row filter-body">
                 <div class="col-sm-3">
                     <span class="filter-item-header">Додано:</span>
-                    <div data-filter-type="date" class="list-group">
+                    <div data-filter-type="date" class="list-group filter-group">
                         <a data-value="new" class="list-group-item active">Нові</a>
                         <a data-value="old" class="list-group-item">Давні</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <span class="filter-item-header">Тип:</span>
-                    <div data-filter-type="type" class="list-group">
+                    <div data-filter-type="type" class="list-group filter-group">
                         <a data-value="all" class="list-group-item active">Всі</a>
                         <a data-value="movie" class="list-group-item">Фільми</a>
                         <a data-value="tv" class="list-group-item">Серіали</a>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-sm-3">
                     <span class="filter-item-header">Рейтинг:</span>
-                    <div data-filter-type="rate" class="list-group">
+                    <div data-filter-type="rate" class="list-group filter-group">
                         <a data-value="all" class="list-group-item active">Всі</a>
                         <a data-value="hight" class="list-group-item">Високий</a>
                         <a data-value="low" class="list-group-item">Низький</a>
@@ -47,9 +47,9 @@
                 </div>
                 <div class="col-sm-3">
                     <span class="filter-item-header">Додатково:</span>
-                    <div data-filter-type="extra" class="list-group">
+                    <div data-filter-type="extra" class="list-group filter-group filter-boolean">
                         <a data-value="favorite" class="list-group-item">Ярославчик рекомендує</a>
-                        <a data-value="my-heart" class="list-group-item">Мої сердечка</a>
+                        <a data-value="my_heart" class="list-group-item">Мої сердечка</a>
                     </div>
                 </div>
             </div>
@@ -61,62 +61,62 @@
         <div id="data" class="row">
             @foreach (var item in Model)
             {
-                <div class="container col-md-4 col-sm-6">
-                    <div data-id="@item.Id" data-type="@item.Extras" class="panel panel-movie no-init panel-default">
-                        <div class="panel-heading ">
-                            <div class="one-line">
-                                <span class="badge rate pull-right">@item.Rate</span>
-                                @{
+            <div class="container col-md-4 col-sm-6">
+                <div data-id="@item.Id" data-type="@item.Extras" class="panel panel-movie no-init panel-default">
+                    <div class="panel-heading ">
+                        <div class="one-line">
+                            <span class="badge rate pull-right">@item.Rate</span>
+                            @{
                                     if (item.IsFavorite)
                                     {
-                                        <span class="glyphicon glyphicon-star pull-right" style="margin-right:5px; color:red"></span>
+                                <span class="glyphicon glyphicon-star pull-right" style="margin-right:5px; color:red"></span>
                                     }
-                                }
-                                <span>@item.Name</span>
-                            </div>
+                            }
+                            <span>@item.Name</span>
                         </div>
-                        <div class="panel-body">
-                            <div class="display-wrapper">
-                                <img class="img-medium movie-poster" src="~/Content/loading_dark.gif" />
-                                <div class="movie-info">
-                                    <div class="row">
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">Назва:</div>
-                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-name">-</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">Реліз:</div>
-                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-release">-</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">Жанри:</div>
-                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-genre">-</div>
-                                    </div>
-                                    <div class="description-wrapper">
-                                        <hr />
-                                        <div class="movie-description"></div>
-                                    </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="display-wrapper">
+                            <img class="img-medium movie-poster" src="~/Content/loading_dark.gif" />
+                            <div class="movie-info">
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-4 col-lg-4">Назва:</div>
+                                    <div class="col-sm-8 col-xs-8 col-lg-8 movie-name">-</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-4 col-lg-4">Реліз:</div>
+                                    <div class="col-sm-8 col-xs-8 col-lg-8 movie-release">-</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-4 col-lg-4">Жанри:</div>
+                                    <div class="col-sm-8 col-xs-8 col-lg-8 movie-genre">-</div>
+                                </div>
+                                <div class="description-wrapper">
+                                    <hr />
+                                    <div class="movie-description"></div>
                                 </div>
                             </div>
-                            <div class="btn-wrapper text-center" style="margin-top:10px">
-                                <button class="btn btn-danger vote">
-                                    <span class="glyphicon glyphicon-heart"></span>
-                                </button>
-                                <button class="btn btn-info info">
-                                    <span class="glyphicon glyphicon-info-sign"></span>
-                                </button>
-                                @{if (item.Extras == "tv")
+                        </div>
+                        <div class="btn-wrapper text-center" style="margin-top:10px">
+                            <button class="btn btn-danger vote">
+                                <span class="glyphicon glyphicon-heart"></span>
+                            </button>
+                            <button class="btn btn-info info">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </button>
+                            @{if (item.Extras == "tv")
                                     {
-                                        <span class="type t-tv">Серіал</span>
+                                <span class="type t-tv">Серіал</span>
                                     }
                                     else if (item.Extras == "movie")
                                     {
-                                        <span class="type t-movie">Фільм</span>
+                                <span class="type t-movie">Фільм</span>
                                     }
-                                }
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
+            </div>
                                     }
         </div>
         @{ int pages = (int)ViewBag.Pages;
@@ -149,10 +149,10 @@
         $(".filter-header").click(function (e) {
             var self = this;
             var filterBody = $(".filter-body");
-            
+
             if (filterBody.is(":animated"))
                 return false;
-            
+
             $(this).toggleClass("active");
             filterBody.slideToggle();
         });
@@ -199,6 +199,51 @@
                     });
                     return false;
                 }
+            });
+        });
+
+        $(".filter-group > a.list-group-item").click(function (e) {
+            if ($(this).hasClass("active") && !$(this).parent(".filter-boolean").length)
+                return false;
+
+            if ($(this).parent(".filter-boolean").length) {
+                $(this).toggleClass("active");
+            } else {
+                $(this).addClass("active").siblings(".active").removeClass("active");
+            }
+
+            var params = {};
+            $(".filter-group:not(.filter-boolean) > a.list-group-item.active").each(function (i, e) {
+                var key = $(this).parent(".filter-group").data("filter-type");
+                var value = $(this).data("value");
+                params[key] = value;
+            });
+            $(".filter-boolean > a.list-group-item.active").each(function (i, e) {
+                var key = $(this).data("value");
+                params[key] = true;
+            });
+
+            var urlParams = $.param(params);
+            
+            $("#logo").hide();
+            $("#loading").show();
+            $("#load-more").addClass("disabled");
+            $("#data").load('@Url.Action("Page", "Home")?' + urlParams, function () {
+                $("#loading").hide();
+                $("#logo").show();
+                //$(".page").each(function (i, el) {
+                //    var parent = $(el).parent();
+                //    if ($(parent).hasClass("active"))
+                //        $(parent).removeClass("active").css("cursor", "pointer");
+                //    if (self == el) {
+                //        $(parent).addClass("active").css("cursor", "");
+                //        if (i == totalPages - 1)
+                //            $("#load-more").hide();
+                //        else
+                //            $("#load-more").show();
+                //    }
+                //});
+                $("#load-more").removeClass("disabled");
             });
         });
 
