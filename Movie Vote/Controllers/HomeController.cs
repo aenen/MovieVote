@@ -27,9 +27,62 @@ namespace Movie_Vote.Controllers
             return View(context.Movies.OrderByDescending(o => o.Id).Take(movies));
         }
 
-        public ActionResult Page(int page=1)
+        public ActionResult Page(int page = 1, string date = "new", string type = "all", string rate = "all", bool favorite = false, bool my_heart = false)
         {
-            var result = context.Movies.OrderByDescending(o => o.Id).Skip((page - 1) * movies).Take(movies).ToList();
+            var result = context.Movies.AsEnumerable();
+            switch (date)
+            {
+                case "new":
+                    result = result.OrderByDescending(x => x.Id);
+                    break;
+                case "old":
+                    result = result.OrderBy(x => x.Id);
+                    break;
+                default:
+                    break;
+            }
+
+            switch (type)
+            {
+                case "all":
+                    break;
+                case "movie":
+                    result = result.Where(x=>x.Extras=="movie");
+                    break;
+                case "tv":
+                    result = result.Where(x => x.Extras == "tv");
+                    break;
+                default:
+                    break;
+            }
+
+            switch (rate)
+            {
+                case "all":
+                    break;
+                case "hight":
+                    result = result.OrderByDescending(x=>x.Rate);
+                    break;
+                case "low":
+                    result = result.OrderBy(x => x.Rate);
+                    break;
+                default:
+                    break;
+            }
+
+            if (favorite)
+                result = result.Where(x => x.IsFavorite);
+            if(my_heart)
+            {
+                UserVote uv = Session["UserVote"] as UserVote;
+                result=result.Join(uv.MovieId, x => x.Id, x => x, (a, b) => new { XMovie = a }).Select(x => x.XMovie).ToList();
+            }
+
+            int count = result.Count();
+            int pages = count / movies + ((count % movies == 0) ? 0 : 1);
+            ViewBag.Pages = pages;
+
+            result = result.Skip((page - 1) * movies).Take(movies).ToList();
             return PartialView(result);
         }
 
@@ -47,7 +100,7 @@ namespace Movie_Vote.Controllers
             else
             {
                 uv.MovieId.Add(id);
-                rate = ++context.Movies.Find(id).Rate; //геніальні конструкції
+                rate = ++context.Movies.Find(id).Rate;
             }
 
             context.SaveChanges();
