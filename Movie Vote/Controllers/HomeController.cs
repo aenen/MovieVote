@@ -78,6 +78,10 @@ namespace Movie_Vote.Controllers
                 result=result.Join(uv.MovieId, x => x.Id, x => x, (a, b) => new { XMovie = a }).Select(x => x.XMovie).ToList();
             }
 
+            int count = result.Count();
+            int pages = count / movies + ((count % movies == 0) ? 0 : 1);
+            ViewBag.Pages = pages;
+
             result = result.Skip((page - 1) * movies).Take(movies).ToList();
             return PartialView(result);
         }
@@ -96,7 +100,7 @@ namespace Movie_Vote.Controllers
             else
             {
                 uv.MovieId.Add(id);
-                rate = ++context.Movies.Find(id).Rate; //геніальні конструкції
+                rate = ++context.Movies.Find(id).Rate;
             }
 
             context.SaveChanges();

@@ -17,6 +17,10 @@ textarea {
 
 /*My things*/
 
+ul.pagination li:not(.active) {
+    cursor:pointer;
+}
+
 .section-filter {
     background-color: #e7e2e7;
     border-top: 1px solid rgba(92,62,92,0.2);

@@ -69,7 +69,7 @@
                             @{
                                     if (item.IsFavorite)
                                     {
-                                <span class="glyphicon glyphicon-star pull-right" style="margin-right:5px; color:red"></span>
+                            <span class="glyphicon glyphicon-star pull-right" style="margin-right:5px; color:red"></span>
                                     }
                             }
                             <span>@item.Name</span>
@@ -106,11 +106,11 @@
                             </button>
                             @{if (item.Extras == "tv")
                                     {
-                                <span class="type t-tv">Серіал</span>
+                            <span class="type t-tv">Серіал</span>
                                     }
                                     else if (item.Extras == "movie")
                                     {
-                                <span class="type t-movie">Фільм</span>
+                            <span class="type t-movie">Фільм</span>
                                     }
                             }
                         </div>
@@ -130,7 +130,7 @@
                         <li class="active"><a class="page" data-page="1">1</a></li>
                         @for (int i = 2; i <= pages; i++)
                 {
-                            <li style="cursor: pointer"><a class="page" data-page="@i">@i</a></li>
+                            <li><a class="page" data-page="@i">@i</a></li>
                         }
                     </ul>
                 </div>
@@ -170,6 +170,53 @@
             }
         });
 
+        function getFilterParams(page = 1) {
+            var params = {};
+            if (page > 1)
+                params["page"] = page;
+
+            $(".filter-group > a.list-group-item.active").each(function (i, e) {
+                var key = $(this).parent(".filter-group").data("filter-type");
+                var value = $(this).data("value");
+                if ($(this).parent(".filter-boolean").length) {
+                    key = $(this).data("value");
+                    value = true;
+                }
+                params[key] = value;
+            });
+
+            return params;
+        }
+
+        function pageEventClick(e) {
+            if ($(this).parent().hasClass("active"))
+                return false;
+
+            var pg = $(this).attr("data-page");
+            var self = this;
+            $("#logo").hide();
+            $("#loading").show();
+            $("#load-more").addClass("disabled");
+            $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
+            $("#data").load('@Url.Action("Page", "Home")?' + $.param(getFilterParams(pg)), function () {
+                $("#loading").hide();
+                $("#logo").show();
+                $(".page").each(function(i, el){
+                    var parent=$(el).parent();
+                    if ($(parent).hasClass("active"))
+                        $(parent).removeClass("active");
+                    if (self==el){
+                        $(parent).addClass("active");
+                        if (i==totalPages-1)
+                            $("#load-more").hide();
+                        else
+                            $("#load-more").show();
+                    }
+                });
+                $("#load-more").removeClass("disabled");
+            });
+        };
+
         var totalPages = $(".pagination li").length;
         $("#load-more").click(function(e){
             if ($(this).hasClass("disabled"))
@@ -185,7 +232,7 @@
                     $("#loading").show();
                     $("#load-more").addClass("disabled");
                     $.ajax({ type: "GET",
-                        url: '@Url.Action("Page", "Home")?page=' + loadPage,
+                        url: '@Url.Action("Page", "Home")?' + + $.param(getFilterParams(loadPage),
                         success : function(text)
                         {
                             $('#data').append(text);
@@ -213,36 +260,34 @@
             }
 
             var params = {};
-            $(".filter-group:not(.filter-boolean) > a.list-group-item.active").each(function (i, e) {
+            $(".filter-group > a.list-group-item.active").each(function (i, e) {
                 var key = $(this).parent(".filter-group").data("filter-type");
                 var value = $(this).data("value");
+                if ($(this).parent(".filter-boolean").length) {
+                    key = $(this).data("value");
+                    value = true;
+                }
                 params[key] = value;
-            });
-            $(".filter-boolean > a.list-group-item.active").each(function (i, e) {
-                var key = $(this).data("value");
-                params[key] = true;
             });
 
             var urlParams = $.param(params);
-            
+
             $("#logo").hide();
             $("#loading").show();
             $("#load-more").addClass("disabled");
             $("#data").load('@Url.Action("Page", "Home")?' + urlParams, function () {
                 $("#loading").hide();
                 $("#logo").show();
-                //$(".page").each(function (i, el) {
-                //    var parent = $(el).parent();
-                //    if ($(parent).hasClass("active"))
-                //        $(parent).removeClass("active").css("cursor", "pointer");
-                //    if (self == el) {
-                //        $(parent).addClass("active").css("cursor", "");
-                //        if (i == totalPages - 1)
-                //            $("#load-more").hide();
-                //        else
-                //            $("#load-more").show();
-                //    }
-                //});
+
+                $("ul.pagination").empty();
+                if (contentPages > 1) {
+                    for (var i = 1; i <= contentPages; i++) {
+                        $("<li/>").append(
+                            $("<a/>", { class: "page", text: i }).attr("data-page", i).on("click", pageEventClick)
+                        ).appendTo("ul.pagination");
+                    }
+                    $("ul.pagination li").first().addClass("active");
+                }
                 $("#load-more").removeClass("disabled");
             });
         });
@@ -263,9 +308,9 @@
                 $(".page").each(function(i, el){
                     var parent=$(el).parent();
                     if ($(parent).hasClass("active"))
-                        $(parent).removeClass("active").css("cursor", "pointer");
+                        $(parent).removeClass("active");
                     if (self==el){
-                        $(parent).addClass("active").css("cursor", "");
+                        $(parent).addClass("active");
                         if (i==totalPages-1)
                             $("#load-more").hide();
                         else
