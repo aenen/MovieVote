@@ -232,7 +232,7 @@
                     $("#loading").show();
                     $("#load-more").addClass("disabled");
                     $.ajax({ type: "GET",
-                        url: '@Url.Action("Page", "Home")?' + + $.param(getFilterParams(loadPage),
+                        url: '@Url.Action("Page", "Home")?' + $.param(getFilterParams(loadPage),
                         success : function(text)
                         {
                             $('#data').append(text);
