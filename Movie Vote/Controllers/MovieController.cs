@@ -50,7 +50,7 @@ namespace Movie_Vote.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,Name,Year,Extras,IsFavorite")] Movie movie)
+        public ActionResult Create([Bind(Include = "Name,Year,Extras,IsFavorite")] Movie movie)
         {
             if (ModelState.IsValid)
             {

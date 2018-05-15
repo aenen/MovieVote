@@ -14,7 +14,7 @@ namespace Movie_Vote_Data.DbLayer
         [StringLength(50)]
         public string Name { get; set; }
 
-        public short Year { get; set; }
+        public short? Year { get; set; }
 
         public short Rate { get; set; }
 

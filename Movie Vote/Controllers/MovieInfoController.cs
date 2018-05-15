@@ -57,7 +57,7 @@ namespace Movie_Vote.Controllers
             request.AddParameter("page", 1);
             request.AddParameter("query", data.Name);
             request.AddParameter("api_key", key);
-            if (data.Year > 0)
+            if (data.Year != null)
             {
                 if (data.Extras == "movie")
                     request.AddParameter("year", data.Year);
