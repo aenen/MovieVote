@@ -144,31 +144,33 @@
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/NoRazor.js"></script>
-
     <script>
-        $(".filter-header").click(function (e) {
-            var self = this;
-            var filterBody = $(".filter-body");
-
-            if (filterBody.is(":animated"))
-                return false;
-
-            $(this).toggleClass("active");
-            filterBody.slideToggle();
-        });
-    </script>
-
-    <script>
+        var contentPages=@ViewBag.Pages;
         var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
         $(".panel-movie").each(function (index, element) {
             var id = GetId(this);
-            var self = this;
             for (var i in votedMov){
                 if (votedMov[i] == id){
                     $(element).removeClass("panel-default").addClass("panel-danger").find(".vote").addClass("active");
                 }
             }
         });
+
+        function loading(isLoading) {
+            if (isLoading) {
+                $("#logo").hide();
+                $("#loading").show();
+                $("#load-more").addClass("disabled");
+                $(".filter-group > a.list-group-item").addClass("disabled");
+                $(".pagination li:not(.active)").addClass("disabled");
+            } else {
+                $("#loading").hide();
+                $("#logo").show();
+                $("#load-more").removeClass("disabled");
+                $(".filter-group > a.list-group-item").removeClass("disabled");
+                $(".pagination li").removeClass("disabled");
+            }
+        }
 
         function getFilterParams(page = 1) {
             var params = {};
@@ -189,67 +191,28 @@
         }
 
         function pageEventClick(e) {
-            if ($(this).parent().hasClass("active"))
+            if ($(this).parent().hasClass("active") || $(this).parent().hasClass("disabled"))
                 return false;
 
-            var pg = $(this).attr("data-page");
+            var page = $(this).attr("data-page");
             var self = this;
-            $("#logo").hide();
-            $("#loading").show();
-            $("#load-more").addClass("disabled");
+            loading(true);
             $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
-            $("#data").load('@Url.Action("Page", "Home")?' + $.param(getFilterParams(pg)), function () {
-                $("#loading").hide();
-                $("#logo").show();
-                $(".page").each(function(i, el){
-                    var parent=$(el).parent();
-                    if ($(parent).hasClass("active"))
-                        $(parent).removeClass("active");
-                    if (self==el){
-                        $(parent).addClass("active");
-                        if (i==totalPages-1)
-                            $("#load-more").hide();
-                        else
-                            $("#load-more").show();
-                    }
-                });
-                $("#load-more").removeClass("disabled");
+            $("#data").load('@Url.Action("Page", "Home")?' + $.param(getFilterParams(page)), function () {
+                $(".pagination li.active").removeClass("active");
+                $(self).parent().addClass("active");
+                if ($(self).data("page") == contentPages)
+                    $("#load-more").hide();
+                else
+                    $("#load-more").show();
+
+                loading(false);
             });
         };
 
-        var totalPages = $(".pagination li").length;
-        $("#load-more").click(function(e){
+        function filterItemEventClick(e) {
             if ($(this).hasClass("disabled"))
                 return false;
-
-            var self=this;
-            var hasActive=false;
-            $(".pagination li").each(function(index, element){
-                hasActive=$(element).hasClass("active")?true:hasActive;
-                if (!$(element).hasClass("active") && hasActive){
-                    var loadPage=$(element).children().first().attr("data-page");
-                    $("#logo").hide();
-                    $("#loading").show();
-                    $("#load-more").addClass("disabled");
-                    $.ajax({ type: "GET",
-                        url: '@Url.Action("Page", "Home")?' + $.param(getFilterParams(loadPage)),
-                        success : function(text)
-                        {
-                            $('#data').append(text);
-                            $(element).addClass("active");
-                            if(index==totalPages-1)
-                                $(self).hide();
-                            $("#loading").hide();
-                            $("#logo").show();
-                            $("#load-more").removeClass("disabled");
-                        }
-                    });
-                    return false;
-                }
-            });
-        });
-
-        $(".filter-group > a.list-group-item").click(function (e) {
             if ($(this).hasClass("active") && !$(this).parent(".filter-boolean").length)
                 return false;
 
@@ -259,67 +222,47 @@
                 $(this).addClass("active").siblings(".active").removeClass("active");
             }
 
-            var params = {};
-            $(".filter-group > a.list-group-item.active").each(function (i, e) {
-                var key = $(this).parent(".filter-group").data("filter-type");
-                var value = $(this).data("value");
-                if ($(this).parent(".filter-boolean").length) {
-                    key = $(this).data("value");
-                    value = true;
-                }
-                params[key] = value;
-            });
-
-            var urlParams = $.param(params);
-
-            $("#logo").hide();
-            $("#loading").show();
-            $("#load-more").addClass("disabled");
+            loading(true);
+            var urlParams = $.param(getFilterParams());
             $("#data").load('@Url.Action("Page", "Home")?' + urlParams, function () {
-                $("#loading").hide();
-                $("#logo").show();
-
                 $("ul.pagination").empty();
                 if (contentPages > 1) {
+                    $("#load-more").show();
                     for (var i = 1; i <= contentPages; i++) {
                         $("<li/>").append(
                             $("<a/>", { class: "page", text: i }).attr("data-page", i).on("click", pageEventClick)
                         ).appendTo("ul.pagination");
                     }
                     $("ul.pagination li").first().addClass("active");
+                } else {
+                    $("#load-more").hide();
                 }
-                $("#load-more").removeClass("disabled");
-            });
-        });
 
-        $(".page").click(function(e) {
-            if ($(this).parent().hasClass("active"))
+                loading(false);
+            });
+        };
+
+        function loadMoreEventClick(e) {
+            if ($(this).hasClass("disabled"))
                 return false;
 
-            var pg = $(this).attr("data-page");
-            var self = this;
-            $("#logo").hide();
-            $("#loading").show();
-            $("#load-more").addClass("disabled");
-            $('html, body').animate({scrollTop:$('#data-section').position().top-50}, 'slow');
-            $("#data").load('@Url.Action("Page", "Home")?page=' + pg, function() {
-                $("#loading").hide();
-                $("#logo").show();
-                $(".page").each(function(i, el){
-                    var parent=$(el).parent();
-                    if ($(parent).hasClass("active"))
-                        $(parent).removeClass("active");
-                    if (self==el){
-                        $(parent).addClass("active");
-                        if (i==totalPages-1)
-                            $("#load-more").hide();
-                        else
-                            $("#load-more").show();
-                    }
-                });
-                $("#load-more").removeClass("disabled");
+            var self=this;
+            var loadPage = $(".pagination li.active a").last().data("page") + 1;
+            loading(true);
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Page", "Home")?' + $.param(getFilterParams(loadPage)),
+                success : function(text)
+                {
+                    $('#data').append(text);
+                    $(".pagination li.active").next().addClass("active");
+                    if (loadPage == contentPages)
+                        $(self).hide();
+                    loading(false);
+                }
             });
-        })
+        }
+
         var initElements=function(){
             var aniDone = true;
             $(".info:not(.clickadded)").click(function (e) {
@@ -360,7 +303,20 @@
                 });
             }).addClass("clickadded");
         };
-        $(function(){
+        $(function () {
+            $(".page").on("click", pageEventClick);
+            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
+            $("#load-more").on("click", loadMoreEventClick);
+
+            $(".filter-header").click(function (e) {
+                var filterBody = $(".filter-body");
+                if (filterBody.is(":animated"))
+                    return false;
+
+                $(this).toggleClass("active");
+                filterBody.slideToggle();
+            });
+
             initElements();
         });
     </script>
