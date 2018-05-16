@@ -21,6 +21,8 @@ namespace Movie_Vote_Data.DbLayer
         [StringLength(50)]
         public string Extras { get; set; }
 
+        public bool IsTvShow { get; set; }
+
         public bool IsFavorite { get; set; }
     }
 }
