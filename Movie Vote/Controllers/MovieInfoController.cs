@@ -53,16 +53,16 @@ namespace Movie_Vote.Controllers
 
             var client = new RestClient("https://api.themoviedb.org");
             var request = new RestRequest("3/search/{type}", Method.GET);
-            request.AddUrlSegment("type", data.Extras);
+            request.AddUrlSegment("type", data.IsTvShow?"tv":"movie");
             request.AddParameter("page", 1);
             request.AddParameter("query", data.Name);
             request.AddParameter("api_key", key);
             if (data.Year != null)
             {
-                if (data.Extras == "movie")
-                    request.AddParameter("year", data.Year);
-                if (data.Extras == "tv")
+                if (data.IsTvShow)
                     request.AddParameter("first_air_date_year", data.Year);
+                else
+                    request.AddParameter("year", data.Year);
             }
 
             JObject json = null;

@@ -8,7 +8,7 @@
 @foreach (var item in Model)
 {
     <div class="container col-md-4 col-sm-6">
-        <div data-id="@item.Id" data-type="@item.Extras" class="panel panel-movie no-init panel-default">
+        <div data-id="@item.Id" data-type="@(item.IsTvShow?"tv":"movie")" class="panel panel-movie no-init panel-default">
             <div class="panel-heading ">
                 <div class="one-line">
                     <span class="badge rate pull-right">@item.Rate</span>
@@ -44,14 +44,13 @@
                     </div>
                 </div>
                 <div class="btn-wrapper text-center" style="margin-top:10px">
-                    @{if (item.Extras == "tv")
-                        {
-                            <span class="type t-tv">Серіал</span>
-                        }
-                        else if (item.Extras == "movie")
-                        {
-                            <span class="type t-movie">Фільм</span>
-                        }
+                    @if (item.IsTvShow)
+                    {
+                        <span class="type t-tv">Серіал</span>
+                    }
+                    else
+                    {
+                        <span class="type t-movie">Фільм</span>
                     }
                     <button class="btn btn-danger vote">
                         <span class="glyphicon glyphicon-heart"></span>

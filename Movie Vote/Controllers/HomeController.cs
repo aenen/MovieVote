@@ -47,10 +47,10 @@ namespace Movie_Vote.Controllers
                 case "all":
                     break;
                 case "movie":
-                    result = result.Where(x=>x.Extras=="movie");
+                    result = result.Where(x=>!x.IsTvShow);
                     break;
                 case "tv":
-                    result = result.Where(x => x.Extras == "tv");
+                    result = result.Where(x => x.IsTvShow);
                     break;
                 default:
                     break;

@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201805161548249_AddIsTvShow.Designer.cs">
       <DependentUpon>201805161548249_AddIsTvShow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805181450482_DeleteExtras.cs" />
+    <Compile Include="Migrations\201805181450482_DeleteExtras.Designer.cs">
+      <DependentUpon>201805181450482_DeleteExtras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805161548249_AddIsTvShow.resx">
       <DependentUpon>201805161548249_AddIsTvShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805181450482_DeleteExtras.resx">
+      <DependentUpon>201805181450482_DeleteExtras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

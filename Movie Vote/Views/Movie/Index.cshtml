@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Rate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Extras)
+            @Html.DisplayNameFor(model => model.IsTvShow)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsFavorite)
@@ -41,14 +41,13 @@
             @Html.DisplayFor(modelItem => item.Rate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Extras)
+            @Html.DisplayFor(modelItem => item.IsTvShow)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsFavorite)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>

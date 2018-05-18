@@ -32,10 +32,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Extras, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IsTvShow, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Extras, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Extras, "", new { @class = "text-danger" })
+                @Html.CheckBoxFor(model => model.IsTvShow, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IsTvShow, "", new { @class = "text-danger" })
             </div>
         </div>
 
