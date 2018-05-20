@@ -13,19 +13,19 @@ namespace Movie_Vote_Data.DbLayer
         public short Id { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Ім'я")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Рік")]
+        [Display(Name = "Year")]
         public short? Year { get; set; }
 
-        [Display(Name = "Рейтинг")]
+        [Display(Name = "Rate")]
         public short Rate { get; set; }
 
-        [Display(Name = "Серіал?")]
+        [Display(Name = "TV show")]
         public bool IsTvShow { get; set; }
 
-        [Display(Name = "Улюблений?")]
+        [Display(Name = "Favorite")]
         public bool IsFavorite { get; set; }
     }
 }

@@ -35,7 +35,7 @@ var initMovie = {
         if (data.total_results > 0) {
             var result = data.results[0];
             if (result.poster_path != null && result.poster_path != "")
-                $(this).find(".movie-poster").attr("src", "http://image.tmdb.org/t/p/w300" + result.poster_path);
+                $(this).find(".movie-poster").attr("src", "https://image.tmdb.org/t/p/w300" + result.poster_path);
             else
                 $(this).find(".movie-poster").attr("src", "/Content/noposter.png");
             $(this).find(".movie-name").text(result.original_name);
@@ -61,7 +61,7 @@ var initMovie = {
         if (data.total_results > 0) {
             var result = data.results[0];
             if (result.poster_path != null && result.poster_path != "")
-                $(this).find(".movie-poster").attr("src", "http://image.tmdb.org/t/p/w300" + result.poster_path);
+                $(this).find(".movie-poster").attr("src", "https://image.tmdb.org/t/p/w300" + result.poster_path);
             else
                 $(this).find(".movie-poster").attr("src", "/Content/noposter.png");
             $(this).find(".movie-name").text(result.original_title);

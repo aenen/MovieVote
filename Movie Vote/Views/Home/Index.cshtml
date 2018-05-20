@@ -115,7 +115,7 @@
                 </div>
             }
         </div>
-        @{ 
+        @{
             int pages = (int)ViewBag.Pages;
             if (pages > 1)
             {
@@ -123,13 +123,15 @@
                     <div class="row">
                         <button id="load-more" class="btn btn-lg btn-primary">Завантажити ще</button>
                     </div>
-                    <ul class="pagination text-center">
-                        <li class="active"><a class="page" data-page="1">1</a></li>
-                        @for (int i = 2; i <= pages; i++)
-                        {
-                            <li><a class="page" data-page="@i">@i</a></li>
-                        }
-                    </ul>
+                    <div id="pagination">
+                        @*<ul class="pagination text-center">
+                            <li class="active"><a class="page" data-page="1">1</a></li>
+                            @for (int i = 2; i <= pages; i++)
+                {
+                                <li><a class="page" data-page="@i">@i</a></li>
+                            }
+                        </ul>*@
+                    </div>
                 </div>
             }
         }
@@ -141,7 +143,24 @@
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/NoRazor.js"></script>
+    <script src="~/Scripts/Pagination.js"></script>
     <script>
+        $(function () {
+            $("#pagination").pagination('@Url.Action("Page", "Home")', contentPages);
+            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
+            $("#load-more").on("click", loadMoreEventClick);
+
+            $(".filter-header").click(function (e) {
+                var filterBody = $(".filter-body");
+                if (filterBody.is(":animated"))
+                    return false;
+                $(this).toggleClass("active");
+                filterBody.slideToggle();
+            });
+
+            initElements();
+        });
+
         var contentPages = @ViewBag.Pages;
         var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
         $(".panel-movie").each(function (index, element) {
@@ -268,7 +287,7 @@
 
                 if (info.is(":animated"))
                     return false;
-                
+
                 $(this).toggleClass("active");
                 if ($(info).css("opacity") == 0) {
                     poster.css("filter", "blur(5px)");
@@ -300,21 +319,5 @@
                 });
             }).addClass("clickadded");
         };
-
-        $(function () {
-            $(".page").on("click", pageEventClick);
-            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
-            $("#load-more").on("click", loadMoreEventClick);
-
-            $(".filter-header").click(function (e) {
-                var filterBody = $(".filter-body");
-                if (filterBody.is(":animated"))
-                    return false;
-                $(this).toggleClass("active");
-                filterBody.slideToggle();
-            });
-
-            initElements();
-        });
     </script>
 }
