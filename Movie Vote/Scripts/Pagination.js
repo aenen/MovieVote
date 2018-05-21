@@ -5,9 +5,19 @@
 //var settings = $.extend({}, defaults, options);
 
 (function ($) {
-    
 
-    $.fn.pagination = function (pageUrl, totalPages/*, urlParameters, option*/) {
+    $.fn.paginationAjax = function (pageDataUrl, totalPages, options) {
+
+        var thisElement = this;
+
+        var defaultSettings = {
+            dataElementSelector: "#pageData",
+            urlParameters: {},
+            beforeFunction: function () { },
+            afterFunction: function () { },
+            dontLoadActiveOrDisabledPage: true
+        };
+        var settings = $.extend({}, defaultSettings, options);
 
         create.call(this, 1, totalPages);
 
@@ -29,14 +39,23 @@
 
         function pageClick() {
 
-            alert($(this).data("page"));
+            if (settings.dontLoadActiveOrDisabledPage) {
+                if ($(this).parent().hasClass("active") || $(this).parent().hasClass("disabled"))
+                    return false;
+            }
+
+            settings.beforeFunction();
+            
+            var page = $(this).attr("data-page");
+            var self = this;
+            var params = { page: page };
+            $(settings.dataElementSelector).load(pageDataUrl + '?' + $.param(params), function () {
+                $("ul.pagination li.active").removeClass("active");
+                $(self).parent().addClass("active");
+
+                settings.afterFunction();
+            });
         }
-
-        //this.filter("a").append(function () {
-        //    return " (" + this.href + ")";
-        //});
-
-        //return this;
 
     };
 

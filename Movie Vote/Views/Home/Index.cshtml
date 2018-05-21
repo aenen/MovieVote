@@ -146,7 +146,12 @@
     <script src="~/Scripts/Pagination.js"></script>
     <script>
         $(function () {
-            $("#pagination").pagination('@Url.Action("Page", "Home")', contentPages);
+            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, {
+                dataElementSelector: "#data",
+                urlParameters: getFilterParams(),
+                beforeFunction: function () { loading() },
+                afterFunction: function () { loading(false) }
+            });
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
             $("#load-more").on("click", loadMoreEventClick);
 

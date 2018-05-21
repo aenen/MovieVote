@@ -3,7 +3,7 @@
 }
 
 
-var URL = "https://movievote.azurewebsites.net/";//"http://localhost:7475/";//
+var URL = "http://localhost:7475/";//"https://movievote.azurewebsites.net/";//
 
 var movieInfo = function (panel) {
     if (!$(panel).hasClass("no-init"))
@@ -83,4 +83,4 @@ var initMovie = {
             $(this).find(".movie-poster").attr("src", "/Content/noposter.png");
         }
     }
-}
+};
