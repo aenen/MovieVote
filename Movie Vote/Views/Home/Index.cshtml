@@ -149,8 +149,13 @@
             $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, {
                 dataElementSelector: "#data",
                 urlParameters: getFilterParams(),
-                beforeFunction: function () { loading() },
-                afterFunction: function () { loading(false) }
+                beforeFunction: function () {
+                    $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
+                    loading(true);
+                },
+                afterSuccessFunction: function () { loading(false); },
+                afterErrorFunction: function () { loading(false); },
+                loadMoreButton: true
             });
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
             $("#load-more").on("click", loadMoreEventClick);

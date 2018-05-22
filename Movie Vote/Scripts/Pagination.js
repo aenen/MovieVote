@@ -1,30 +1,29 @@
-﻿//var defaults = { validate: false, limit: 5, name: "foo" };
-//var options = { validate: true, name: "bar", ass: "aaa" };
-
-//// Merge defaults and options, without modifying defaults
-//var settings = $.extend({}, defaults, options);
-
-(function ($) {
+﻿(function ($) {
 
     $.fn.paginationAjax = function (pageDataUrl, totalPages, options) {
-
         var thisElement = this;
-
         var defaultSettings = {
             dataElementSelector: "#pageData",
             urlParameters: {},
-            beforeFunction: function () { },
-            afterFunction: function () { },
-            dontLoadActiveOrDisabledPage: true
+            beforeFunction: $.noop,
+            afterSuccessFunction: $.noop,
+            afterErrorFunction: $.noop,
+            dontLoadActiveOrDisabledPage: true,
+            loadMoreButton: false,
+            loadPageOnCreating: 0
         };
         var settings = $.extend({}, defaultSettings, options);
 
-        create.call(this, 1, totalPages);
+        create(1, totalPages);
 
-
+        /**
+         * @summary Створення елементів "пейджингу" (ul.pagination).
+         *
+         * @param {number} currentPage Відображається сторінка з цим номером.
+         * @param {number} totalPages  Загальна кількість сторінок.
+         */
         function create(currentPage, totalPages) {
-
-            $(this).empty();
+            $(thisElement).empty();
             var container = $("<ul/>", { class: "pagination" });
             var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
 
@@ -34,29 +33,57 @@
             }
 
             container.find("a[data-page='" + currentPage + "']").parent("li").addClass("active");
-            $(this).append(container);
+            $(thisElement).append(container);
         }
 
+        /**
+         * @summary Натиснення на елемент сторінки (ul.pagination li a.page).
+         */
         function pageClick() {
-
             if (settings.dontLoadActiveOrDisabledPage) {
-                if ($(this).parent().hasClass("active") || $(this).parent().hasClass("disabled"))
+                if ($(this).parent().hasClass("active") || $(this).parent().hasClass("disabled")) {
                     return false;
+                }
             }
 
-            settings.beforeFunction();
-            
-            var page = $(this).attr("data-page");
+            var page = $(this).data("page");
             var self = this;
-            var params = { page: page };
-            $(settings.dataElementSelector).load(pageDataUrl + '?' + $.param(params), function () {
+
+            loadPage(page, false, function () {
                 $("ul.pagination li.active").removeClass("active");
                 $(self).parent().addClass("active");
-
-                settings.afterFunction();
             });
         }
 
+        /**
+         * @summary Завантажує вказану сторінку та вставляє дані в контейнер.
+         *
+         * @param {number}   page      Номер сторінки, яку необхідно завантажити.
+         * @param {boolean}  append    false - очищає контейнер перед вставкою; true - додає данні в кінець контейнеру.
+         * @param {function} onSuccess Функція, яка виконується при успішному завантаженні даних.
+         */
+        function loadPage(page, append, onSuccess = $.noop) {
+            settings.beforeFunction();
+            
+            var params = $.extend({ page: page }, settings.urlParameters);
+            $.ajax({
+                type: "GET",
+                url: pageDataUrl + '?' + $.param(params),
+                success: function (dataHtml) {
+                    if (!append) {
+                        $(settings.dataElementSelector).empty();
+                    }
+                    $(settings.dataElementSelector).append(dataHtml);
+
+                    onSuccess();
+
+                    settings.afterSuccessFunction();
+                },
+                error: function () {
+                    settings.afterErrorFunction();
+                }
+            });
+        }
     };
 
 }(jQuery));
