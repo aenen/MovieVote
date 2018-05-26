@@ -15,7 +15,41 @@ textarea {
     max-width: 280px;
 }
 
+
+
+/*pagination*/
+ul.pagination .page {
+    cursor: pointer;
+}
+
+ul.pagination > li {
+    display: inline-block;
+}
+
+ul.pagination .dropdown-toggle {
+    border-radius: 0;
+}
+
+ul.pagination .dropdown-menu {
+    max-height: 150px;
+    min-width: initial;
+    right: -10px;
+    left: -10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+    ul.pagination .dropdown-menu li a {
+        padding: 3px 0;
+    }
+/*pagination*/
+
+
+
 /*My things*/
+
+
 
 ul.pagination li:not(.active) {
     cursor:pointer;

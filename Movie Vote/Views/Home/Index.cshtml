@@ -160,6 +160,7 @@
                 afterLoadMoreSuccess: () => loading(false),
                 afterLoadMoreError: () => loading(false),
 
+                paginationStyle:"allPagesShrink"
             });
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
             $("#load-more").on("click", loadMoreEventClick);
@@ -220,6 +221,26 @@
             return params;
         }
 
+        function pageEventClick(e) {
+            if ($(this).parent().hasClass("active") || $(this).parent().hasClass("disabled"))
+                return false;
+
+            var page = $(this).attr("data-page");
+            var self = this;
+            loading(true);
+            $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
+            $("#data").load('@Url.Action("Page", "Home")?' + $.param(getFilterParams(page)), function () {
+                $(".pagination li.active").removeClass("active");
+                $(self).parent().addClass("active");
+                if ($(self).data("page") == contentPages)
+                    $("#load-more").hide();
+                else
+                    $("#load-more").show();
+
+                loading(false);
+            });
+        };
+
         function filterItemEventClick(e) {
             if ($(this).hasClass("disabled"))
                 return false;
@@ -251,6 +272,27 @@
                 loading(false);
             });
         };
+
+        function loadMoreEventClick(e) {
+            if ($(this).hasClass("disabled"))
+                return false;
+
+            var self=this;
+            var loadPage = $(".pagination li.active a").last().data("page") + 1;
+            loading(true);
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Page", "Home")?' + $.param(getFilterParams(loadPage)),
+                success : function(text)
+                {
+                    $('#data').append(text);
+                    $(".pagination li.active").next().addClass("active");
+                    if (loadPage == contentPages)
+                        $(self).hide();
+                    loading(false);
+                }
+            });
+        }
 
         var initElements=function(){
             $(".info:not(.clickadded)").click(function (e) {
