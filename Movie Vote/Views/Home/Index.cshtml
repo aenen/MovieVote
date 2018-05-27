@@ -144,24 +144,7 @@
     <script src="~/Scripts/Pagination.js"></script>
     <script>
         $(function () {
-            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, {
-                dataElementSelector: "#data",
-                urlParameters: getFilterParams(),
-
-                beforeLoadPage: function () {
-                    $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
-                    loading(true);
-                },
-                afterLoadPageSuccess: () => loading(false),
-                afterLoadPageError: () => loading(false),
-
-                loadMoreButton: true,
-                beforeLoadMore: () => loading(true),
-                afterLoadMoreSuccess: () => loading(false),
-                afterLoadMoreError: () => loading(false),
-
-                paginationStyle:"allPagesShrink"
-            });
+            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
             $("#load-more").on("click", loadMoreEventClick);
 
@@ -176,6 +159,24 @@
             initElements();
         });
 
+        var paginationData = {
+            dataElementSelector: "#data",
+            urlParameters: getFilterParams(),
+
+            beforeLoadPage: function () {
+                $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
+                loading(true);
+            },
+            afterLoadPageSuccess: () => loading(false),
+            afterLoadPageError: () => loading(false),
+
+            loadMoreButton: true,
+            beforeLoadMore: () => loading(true),
+            afterLoadMoreSuccess: () => loading(false),
+            afterLoadMoreError: () => loading(false),
+
+            paginationStyle: "allPagesShrink"
+        };
         var contentPages = @ViewBag.Pages;
         var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
         $(".panel-movie").each(function (index, element) {
@@ -256,18 +257,19 @@
             loading(true);
             var urlParams = $.param(getFilterParams());
             $("#data").load('@Url.Action("Page", "Home")?' + urlParams, function () {
-                $("ul.pagination").empty();
-                if (contentPages > 1) {
-                    $("#load-more").show();
-                    for (var i = 1; i <= contentPages; i++) {
-                        $("<li/>").append(
-                            $("<a/>", { class: "page", text: i }).attr("data-page", i).on("click", pageEventClick)
-                        ).appendTo("ul.pagination");
-                    }
-                    $("ul.pagination li").first().addClass("active");
-                } else {
-                    $("#load-more").hide();
-                }
+                $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: getFilterParams() }));
+                //$("ul.pagination").empty();
+                //if (contentPages > 1) {
+                //    $("#load-more").show();
+                //    for (var i = 1; i <= contentPages; i++) {
+                //        $("<li/>").append(
+                //            $("<a/>", { class: "page", text: i }).attr("data-page", i).on("click", pageEventClick)
+                //        ).appendTo("ul.pagination");
+                //    }
+                //    $("ul.pagination li").first().addClass("active");
+                //} else {
+                //    $("#load-more").hide();
+                //}
 
                 loading(false);
             });

@@ -28,6 +28,9 @@ ul.pagination > li {
 
 ul.pagination .dropdown-toggle {
     border-radius: 0;
+    margin-left: -1px !important;
+    border-color: #dddddd;
+    color: #337ab7;
 }
 
 ul.pagination .dropdown-menu {
@@ -41,7 +44,12 @@ ul.pagination .dropdown-menu {
 }
 
     ul.pagination .dropdown-menu li a {
+        color: #337ab7;
         padding: 3px 0;
+    }
+    ul.pagination .dropdown-menu li.active a {
+        color: white;
+        cursor: default;
     }
 /*pagination*/
 

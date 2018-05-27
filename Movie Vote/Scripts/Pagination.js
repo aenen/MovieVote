@@ -95,6 +95,7 @@
                 dontLoadActiveOrDisabledPage: true, // true - не завантажує сторінки з класами "active" чи "disabled".
                 paginationStyle: "allPages",        // "allPages", "allPagesShrink".
                 paginationStyleFlexible: false,     // true - кількість сторінок підлаштовується під розмір контейнеру.
+                visiblePagesCount: 5,               // Кількість сторінок, які відображаються (стилі: "allPagesShrink").
             };
         }
 
@@ -118,7 +119,7 @@
                     "create": function (currentPage, totalPages) {
 
                         $(thisElement).empty();
-                        var container = $("<ul/>", { class: "pagination" });
+                        var container = $("<ul/>", { class: "pagination" }).css("display", "block");
                         var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
 
                         for (var i = 1; i <= totalPages; i++) {
@@ -193,45 +194,78 @@
                     "create": function (currentPage, totalPages) {
 
                         $(thisElement).empty();
-                        var visiblePages = 2;
-                        var container = $("<ul/>", { class: "pagination" });
+                        if (totalPages < 2) {
+                            return false;
+                        }
+
+                        // Шаблони елементів та контейнер:
+                        var container = $("<ul/>", { class: "pagination" }).css("display","block");
                         var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
                         var dropdown = $("<li/>")
                             .append($("<div/>", { class: "dropup btn-group", style: "display:block" })
                                 .append($("<button/>", { class: "btn btn-default dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
-
-                        if (currentPage > 1) {
-                            $("<li/>")
-                                .append(pageElement.clone(true).attr("data-page", currentPage - 1).addClass("page-prev").text("<"))
-                                .appendTo(container);
-
-                            if (currentPage - visiblePages > 1) {
-                                createDropdown(1, currentPage - visiblePages);
-                            }
+                        
+                        // Данні по сторінкам:
+                        var visiblePages = settings.visiblePagesCount;
+                        var visiblePagesLR = totalPages; 
+                        if (visiblePages >= totalPages) {
+                            visiblePages = totalPages;
+                        } else {
+                            visiblePagesLR = parseInt(visiblePages / 2);
+                            visiblePages = (visiblePages % 2 == 0) ? visiblePages - 1 : visiblePages;
+                        }
+                        var pageFrom = (currentPage - visiblePagesLR > 0) ? currentPage - visiblePagesLR : 1;
+                        var pageTo = (currentPage + visiblePagesLR < totalPages) ? currentPage + visiblePagesLR : totalPages;
+                        if (visiblePages < totalPages) {
+                            pageTo = (currentPage - pageFrom < visiblePagesLR) ? pageTo + (visiblePagesLR - currentPage + 1) : pageTo;
+                            pageFrom = (pageTo - currentPage < visiblePagesLR) ? pageFrom - (visiblePagesLR - (pageTo - currentPage)) : pageFrom;
                         }
 
-                        var pageFrom = (currentPage - visiblePages > 0) ? currentPage - visiblePages : 1;
-                        var pageTo = (currentPage + visiblePages < totalPages) ? currentPage + visiblePages : totalPages;
+                        // Якщо обрана сторінка не перша - створю кнопку "назад"
+                        if (currentPage > 1) {
+                            $("<li/>")
+                                .append(pageElement.clone(true).attr("data-page", currentPage - 1).addClass("page-nav page-prev").text("<"))
+                                .appendTo(container);
+                        }
+
+                        // Створюю дропдаун для попередніх сторінок, яких забагато
+                        createDropdown(1, pageFrom);
+
+                        // Створюю найближчі видимі кнопки сторінок
                         for (var i = pageFrom; i <= pageTo; i++) {
                             $("<li/>")
                                 .append(pageElement.clone(true).attr("data-page", i).text(i))
                                 .appendTo(container);
                         }
 
-                        if (currentPage + visiblePages < totalPages) {
-                            createDropdown(currentPage + visiblePages + 1, totalPages + 1);
-                        }
+                        // Створюю дропдаун для наступних сторінок, яких забагато
+                        createDropdown(pageTo + 1, totalPages + 1);
 
+                        // Якщо обрана сторінка не остання - створюю кнопку "вперед"
                         if (currentPage < totalPages) {
                             $("<li/>")
-                                .append(pageElement.clone(true).attr("data-page", currentPage + 1).addClass("page-next").text(">"))
+                                .append(pageElement.clone(true).attr("data-page", currentPage + 1).addClass("page-nav page-next").text(">"))
                                 .appendTo(container);
                         }
 
+                        // Виділяю обрану сторінку як активну та додаю контейнер в елемент пейджингу
                         container.find("a[data-page='" + currentPage + "']").parent("li").addClass("active");
                         container.appendTo(thisElement);
 
+                        if (settings.loadMoreButton && currentPage !== totalPages) {
+                            $("<button/>", {
+                                class: "btn btn-lg btn-primary",
+                                id: "load-more",
+                                text: "Завантажити ще"
+                            }).on("click", loadMoreClick).insertBefore($(thisElement).children("ul.pagination"));
+                        }
 
+                        /**
+                         * @summary Створює дродаун зі сторінками. 
+                         *
+                         * @param {number} from Починаючи з цієї сторінки.
+                         * @param {number} to   Закінчуючи цією сторінкою не включно (i < to)
+                         */
                         function createDropdown(from, to) {
                             var hiddenElementsList = $("<ul/>", { class: "dropdown-menu" });
                             for (var i = from; i < to; i++) {
@@ -240,7 +274,12 @@
                                         .append(pageElement.clone(true).attr("data-page", i).text(i)));
                             }
 
-                            dropdown.clone(true).appendTo(container).find("div.dropup").append(hiddenElementsList);
+                            var clonedDropdown = dropdown.clone(true);
+                            clonedDropdown.appendTo(container).find("div.dropup").append(hiddenElementsList);
+                            if (!clonedDropdown.find(hiddenElementsList).children("li").length) {
+                                clonedDropdown.hide();
+                            }
+
                         }
                     },
 
@@ -260,7 +299,38 @@
                      * @param {number} loadedPage Завантажена сторінка.
                      */
                     "afterLoadMore": function (loadedPage) {
+                        var visiblePages = settings.visiblePagesCount;
+                        var visiblePagesLR = totalPages;
+                        if (visiblePages > totalPages) {
+                            visiblePages = totalPages;
+                        } else {
+                            visiblePagesLR = parseInt(visiblePages / 2);
+                            visiblePages = (visiblePages % 2 == 0) ? visiblePages - 1 : visiblePages;
+                        }
 
+                        var liElements = $("ul.pagination > li > a.page:not(.page-nav)").parent("li");
+                        
+                        if (loadedPage > visiblePagesLR + 1) {
+                            var nextDrop = $("ul.pagination li:has(div.dropup)").last();
+                            nextDrop.find("ul > li").first().insertAfter(liElements.last());
+                            liElements = $("ul.pagination > li > a.page:not(.page-nav)").parent("li");
+
+                            if (!nextDrop.find("ul.dropdown-menu li").length) {
+                                nextDrop.hide();
+                            }
+                            if (liElements.length > visiblePages) {
+                                $("ul.pagination li:has(div.dropup)").first().show().find("ul").append(liElements.first());
+                            }
+
+                        }
+                                                
+                        $("ul.pagination > li.active").last().next().addClass("active");
+                        $("ul.pagination > li a.page-next").attr("data-page", loadedPage + 1);
+
+                        if (loadedPage == totalPages) {
+                            $("#load-more").hide();
+                            $("ul.pagination > li a.page-next").parent("li").hide();
+                        }
                     }
                 }
             };
