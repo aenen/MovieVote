@@ -283,7 +283,7 @@ h2 {
     justify-content: center; /* Horizontal center alignment */
     border: none;
     font-size: 20px;
-    -webkit-backface-visibility: hidden;
+    /*-webkit-backface-visibility: hidden;*/
 }
 	
 

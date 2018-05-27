@@ -3,7 +3,7 @@
 }
 
 
-var URL = "http://localhost:7475/";//"https://movievote.azurewebsites.net/";//
+var URL = "https://movievote.azurewebsites.net/";//"http://localhost:7475/";//
 
 var movieInfo = function (panel) {
     if (!$(panel).hasClass("no-init"))
