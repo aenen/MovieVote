@@ -207,18 +207,24 @@
                         
                         // Данні по сторінкам:
                         var visiblePages = settings.visiblePagesCount;
-                        var visiblePagesLR = totalPages; 
+                        var visiblePagesLeft = totalPages;
+                        var visiblePagesRight = totalPages;
+
                         if (visiblePages >= totalPages) {
                             visiblePages = totalPages;
                         } else {
-                            visiblePagesLR = parseInt(visiblePages / 2);
-                            visiblePages = (visiblePages % 2 == 0) ? visiblePages - 1 : visiblePages;
+                            if (visiblePages % 2 == 0) {
+                                visiblePagesLeft = visiblePages / 2 - 1;
+                                visiblePagesRight = visiblePages / 2;
+                            } else {
+                                visiblePagesLeft = visiblePagesRight = parseInt(visiblePages / 2);
+                            }
                         }
-                        var pageFrom = (currentPage - visiblePagesLR > 0) ? currentPage - visiblePagesLR : 1;
-                        var pageTo = (currentPage + visiblePagesLR < totalPages) ? currentPage + visiblePagesLR : totalPages;
+                        var pageFrom = (currentPage - visiblePagesLeft > 0) ? currentPage - visiblePagesLeft : 1;
+                        var pageTo = (currentPage + visiblePagesRight < totalPages) ? currentPage + visiblePagesRight : totalPages;
                         if (visiblePages < totalPages) {
-                            pageTo = (currentPage - pageFrom < visiblePagesLR) ? pageTo + (visiblePagesLR - currentPage + 1) : pageTo;
-                            pageFrom = (pageTo - currentPage < visiblePagesLR) ? pageFrom - (visiblePagesLR - (pageTo - currentPage)) : pageFrom;
+                            pageTo = (currentPage - pageFrom < visiblePagesLeft) ? pageTo + (visiblePagesLeft - currentPage + 1) : pageTo;
+                            pageFrom = (pageTo - currentPage < visiblePagesRight) ? pageFrom - (visiblePagesRight - (pageTo - currentPage)) : pageFrom;
                         }
 
                         // Якщо обрана сторінка не перша - створю кнопку "назад"
@@ -300,17 +306,20 @@
                      */
                     "afterLoadMore": function (loadedPage) {
                         var visiblePages = settings.visiblePagesCount;
-                        var visiblePagesLR = totalPages;
-                        if (visiblePages > totalPages) {
+                        var visiblePagesLeft = totalPages;
+                        if (visiblePages >= totalPages) {
                             visiblePages = totalPages;
                         } else {
-                            visiblePagesLR = parseInt(visiblePages / 2);
-                            visiblePages = (visiblePages % 2 == 0) ? visiblePages - 1 : visiblePages;
+                            if (visiblePages % 2 == 0) {
+                                visiblePagesLeft = visiblePages / 2 - 1;
+                            } else {
+                                visiblePagesLeft = visiblePagesRight = parseInt(visiblePages / 2);
+                            }
                         }
 
                         var liElements = $("ul.pagination > li > a.page:not(.page-nav)").parent("li");
                         
-                        if (loadedPage > visiblePagesLR + 1) {
+                        if (loadedPage > visiblePagesLeft + 1) {
                             var nextDrop = $("ul.pagination li:has(div.dropup)").last();
                             nextDrop.find("ul > li").first().insertAfter(liElements.last());
                             liElements = $("ul.pagination > li > a.page:not(.page-nav)").parent("li");
@@ -323,8 +332,8 @@
                             }
 
                         }
-                                                
-                        $("ul.pagination > li.active").last().next().addClass("active");
+
+                        $("ul.pagination > li > a:not(.page-nav)[data-page='" + loadedPage + "']").parent("li").addClass("active");
                         $("ul.pagination > li a.page-next").attr("data-page", loadedPage + 1);
 
                         if (loadedPage == totalPages) {

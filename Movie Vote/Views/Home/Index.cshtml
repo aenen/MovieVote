@@ -143,20 +143,6 @@
     <script src="~/Scripts/NoRazor.js"></script>
     <script src="~/Scripts/Pagination.js"></script>
     <script>
-        $(function () {
-            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
-            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
-
-            $(".filter-header").click(function (e) {
-                var filterBody = $(".filter-body");
-                if (filterBody.is(":animated"))
-                    return false;
-                $(this).toggleClass("active");
-                filterBody.slideToggle();
-            });
-
-            initElements();
-        });
 
         var paginationData = {
             dataElementSelector: "#data",
@@ -174,7 +160,8 @@
             afterLoadMoreSuccess: () => loading(false),
             afterLoadMoreError: () => loading(false),
 
-            paginationStyle: "allPagesShrink"
+            paginationStyle: "allPagesShrink",
+            visiblePagesCount: 5,
         };
         var contentPages = @ViewBag.Pages;
         var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
@@ -220,7 +207,7 @@
 
             return params;
         }
-        
+
         function filterItemEventClick(e) {
             if ($(this).hasClass("disabled"))
                 return false;
@@ -240,7 +227,7 @@
                 loading(false);
             });
         };
-        
+
         var initElements=function(){
             $(".info:not(.clickadded)").click(function (e) {
                 var panel = $(this).closest(".panel-movie");
@@ -281,5 +268,20 @@
                 });
             }).addClass("clickadded");
         };
+
+        $(function () {
+            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
+            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
+
+            $(".filter-header").click(function (e) {
+                var filterBody = $(".filter-body");
+                if (filterBody.is(":animated"))
+                    return false;
+                $(this).toggleClass("active");
+                filterBody.slideToggle();
+            });
+
+            initElements();
+        });
     </script>
 }
