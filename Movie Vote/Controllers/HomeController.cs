@@ -12,7 +12,7 @@ namespace Movie_Vote.Controllers
     {
         MovieContext context = new MovieContext();
         UserVote uv;
-        const int movies = 2;
+        const int movies = 12;
 
         // GET: Home
         public ActionResult Index()

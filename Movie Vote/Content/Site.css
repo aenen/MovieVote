@@ -26,11 +26,20 @@ ul.pagination > li {
     display: inline-block;
 }
 
+    ul.pagination > li:not(.active) a {
+        color: #5c3e5c;
+    }
+
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover {
+    background-color: #5c3e5c;
+    border-color: #5c3e5c;    
+}
+
 ul.pagination .dropdown-toggle {
     border-radius: 0;
     margin-left: -1px !important;
     border-color: #dddddd;
-    color: #337ab7;
+    color: #5c3e5c;
 }
 
 ul.pagination .dropdown-menu {
@@ -44,23 +53,31 @@ ul.pagination .dropdown-menu {
 }
 
     ul.pagination .dropdown-menu li a {
-        color: #337ab7;
+        color: #5c3e5c;
         padding: 3px 0;
     }
-    ul.pagination .dropdown-menu li.active a {
+    ul.pagination .dropdown-menu li.active a,
+    ul.pagination .dropdown-menu li.active a:hover,
+    ul.pagination .dropdown-menu li.active a:focus {
         color: white;
+        background-color: #5c3e5c;
+        border-color: #5c3e5c;
         cursor: default;
     }
+
+#load-more {
+    background-color: #5c3e5c;
+    border-color: #492d49;
+}
 /*pagination*/
-
-
-
 /*My things*/
 
-
+.filter-group .list-group-item.active {
+    background-color: #5c3e5c;
+}
 
 ul.pagination li:not(.active) {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .section-filter {
