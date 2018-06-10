@@ -55,7 +55,24 @@
 
 </table>
 
+@{
+            int pages = (int)ViewBag.Pages;
+            if (pages > 1)
+            {
+        <div class="text-center">
+            <div id="pagination">
+            </div>
+        </div>
+    }
+}
+
 @section scripts {
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Pagination.js"></script>
+    <script>
+        $(function () {
+            $("#pagination").pagination('@Url.Action("Index", "Movie")', @ViewBag.Pages, { currentPage:@ViewBag.Page});
+        });
+    </script>
 }

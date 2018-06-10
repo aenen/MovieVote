@@ -13,28 +13,20 @@ namespace Movie_Vote.Controllers
     public class MovieController : Controller
     {
         private MovieContext db = new MovieContext();
+        const int movies = 25;
 
         // GET: Movie
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return View(db.Movies.ToList());
-        }
+            var result = db.Movies.OrderByDescending(x=>x.Id).AsEnumerable();
+            int count = result.Count();
+            int pages = count / movies + ((count % movies == 0) ? 0 : 1);
+            ViewBag.Pages = pages;
+            ViewBag.Page = page;
 
-        // GET: Movie/Details/5
-        [Authorize]
-        public ActionResult Details(short? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Movie movie = db.Movies.Find(id);
-            if (movie == null)
-            {
-                return HttpNotFound();
-            }
-            return View(movie);
+            result = result.Skip((page - 1) * movies).Take(movies).ToList();
+            return View(result);
         }
 
         // GET: Movie/Create
