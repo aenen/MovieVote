@@ -37,7 +37,7 @@
                             container.append($("<li/>").append(clonedPageElement));
                         }
 
-                        container.find("a[data-page='" + currentPage + "']").parent("li").addClass("active");
+                        container.find("a[data-page='" + currentPage + "']").click((e) => e.preventDefault()).parent("li").addClass("active");
                         $(thisElement).append(container);
                     }
                 },
@@ -65,7 +65,7 @@
 
                         // Шаблони елементів та контейнер:
                         var container = $("<ul/>", { class: "pagination" }).css("display", "block");
-                        var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
+                        var pageElement = $("<a/>", { class: "page", 'data-page': 1 });
                         var dropdown = $("<li/>")
                             .append($("<div/>", { class: "dropup btn-group", style: "display:block" })
                                 .append($("<button/>", { class: "btn btn-default dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
@@ -94,8 +94,9 @@
 
                         // Якщо обрана сторінка не перша - створю кнопку "назад"
                         if (currentPage > 1) {
+                            var params = $.extend({ page: currentPage-1 }, settings.urlParameters);
                             $("<li/>")
-                                .append(pageElement.clone(true).attr("data-page", currentPage - 1).addClass("page-nav page-prev").text("<"))
+                                .append(pageElement.clone(true).attr({ "data-page": currentPage-1, href: pageUrl + "?" + $.param(params) }).addClass("page-nav page-prev").text("<"))
                                 .appendTo(container);
                         }
 
@@ -104,8 +105,9 @@
 
                         // Створюю найближчі видимі кнопки сторінок
                         for (var i = pageFrom; i <= pageTo; i++) {
+                            var params = $.extend({ page: i }, settings.urlParameters);
                             $("<li/>")
-                                .append(pageElement.clone(true).attr("data-page", i).text(i))
+                                .append(pageElement.clone(true).attr({ "data-page": i, href: pageUrl + "?" + $.param(params) }).text(i))
                                 .appendTo(container);
                         }
 
@@ -114,13 +116,14 @@
 
                         // Якщо обрана сторінка не остання - створюю кнопку "вперед"
                         if (currentPage < totalPages) {
+                            var params = $.extend({ page: currentPage + 1 }, settings.urlParameters);
                             $("<li/>")
-                                .append(pageElement.clone(true).attr("data-page", currentPage + 1).addClass("page-nav page-next").text(">"))
+                                .append(pageElement.clone(true).attr({ "data-page": currentPage + 1, href: pageUrl + "?" + $.param(params) }).addClass("page-nav page-next").text(">"))
                                 .appendTo(container);
                         }
 
                         // Виділяю обрану сторінку як активну та додаю контейнер в елемент пейджингу
-                        container.find("a[data-page='" + currentPage + "']").parent("li").addClass("active");
+                        container.find("a[data-page='" + currentPage + "']").click((e) => e.preventDefault()).parent("li").addClass("active");
                         container.appendTo(thisElement);
 
                         /**
@@ -132,9 +135,10 @@
                         function createDropdown(from, to) {
                             var hiddenElementsList = $("<ul/>", { class: "dropdown-menu" });
                             for (var i = from; i < to; i++) {
+                                var params = $.extend({ page: i }, settings.urlParameters);
                                 hiddenElementsList
                                     .append($("<li/>")
-                                        .append(pageElement.clone(true).attr("data-page", i).text(i)));
+                                        .append(pageElement.clone(true).attr({ "data-page": i, href: pageUrl + "?" + $.param(params) }).text(i)));
                             }
 
                             var clonedDropdown = dropdown.clone(true);

@@ -72,7 +72,10 @@
     <script src="~/Scripts/Pagination.js"></script>
     <script>
         $(function () {
-            $("#pagination").pagination('@Url.Action("Index", "Movie")', @ViewBag.Pages, { currentPage:@ViewBag.Page});
+            $("#pagination").pagination('@Url.Action("Index", "Movie")', @ViewBag.Pages, {
+                currentPage:@ViewBag.Page,
+                //paginationStyle:"allPagesShrink"
+            });
         });
     </script>
 }
