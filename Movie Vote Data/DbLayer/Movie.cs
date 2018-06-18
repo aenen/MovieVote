@@ -1,4 +1,4 @@
-namespace Movie_Vote_Data.DbLayer
+﻿namespace Movie_Vote_Data.DbLayer
 {
     using System;
     using System.Collections.Generic;
@@ -22,10 +22,10 @@ namespace Movie_Vote_Data.DbLayer
         [Display(Name = "Rate")]
         public short Rate { get; set; }
 
-        [Display(Name = "TV show")]
+        [Display(Name = "TV")]
         public bool IsTvShow { get; set; }
 
-        [Display(Name = "Favorite")]
+        [Display(Name = "♥")]
         public bool IsFavorite { get; set; }
     }
 }

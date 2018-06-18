@@ -18,14 +18,17 @@ namespace Movie_Vote.Controllers
 
         // GET: Movie
         [Authorize]
-        public ActionResult Index(int page = 1, string filterName="id", bool isFilterAscending=false)
-        {
-            IEnumerable<Movie> result = db.Movies.ToList().OrderByProperty(filterName,isFilterAscending);
+        public ActionResult Index(int page = 1, string filterName = "Id", bool isFilterAscending = false)
+        {            
+            IEnumerable<Movie> result = db.Movies.ToList().OrderByProperty(filterName, isFilterAscending);
 
             int count = result.Count();
             int pages = count / movies + ((count % movies == 0) ? 0 : 1);
+
             ViewBag.Pages = pages;
             ViewBag.Page = page;
+            ViewBag.FilterName = filterName;
+            ViewBag.IsFilterAscending = isFilterAscending;
 
             result = result.Skip((page - 1) * movies).Take(movies).ToList();
             return View(result);

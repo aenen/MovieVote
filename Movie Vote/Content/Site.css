@@ -15,7 +15,41 @@ textarea {
     max-width: 280px;
 }
 
+/*animation loading pages*/
+div.loadingDots {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+}
 
+    div.loadingDots .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 3px;
+        background-color: transparent;
+        animation: loadingDots 1s linear infinite;
+    }
+
+        div.loadingDots .dot:nth-child(2) {
+            animation-delay: -0.75s;
+        }
+
+        div.loadingDots .dot:nth-child(3) {
+            animation-delay: -0.5s;
+        }
+
+@keyframes loadingDots {
+    0%, 60%, 100% {
+        transform: initial;        
+    }
+
+    30% {
+        transform: translateY(-15px);
+        background-color: #dcd1dc;
+    }
+}
 
 /*pagination*/
 ul.pagination .page {
@@ -30,9 +64,9 @@ ul.pagination > li {
         color: #5c3e5c;
     }
 
-    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover {
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover {
     background-color: #5c3e5c;
-    border-color: #5c3e5c;    
+    border-color: #5c3e5c;
 }
 
 ul.pagination .dropdown-toggle {
@@ -56,6 +90,7 @@ ul.pagination .dropdown-menu {
         color: #5c3e5c;
         padding: 3px 0;
     }
+
     ul.pagination .dropdown-menu li.active a,
     ul.pagination .dropdown-menu li.active a:hover,
     ul.pagination .dropdown-menu li.active a:focus {
@@ -124,7 +159,7 @@ ul.pagination li:not(.active) {
 }
 
     .filter-header:not(.active):after {
-        font-size:15px;
+        font-size: 15px;
         font-family: "Glyphicons Halflings";
         content: "\e114";
     }
@@ -302,7 +337,7 @@ h2 {
     font-size: 20px;
     /*-webkit-backface-visibility: hidden;*/
 }
-	
+
 
 a.navbar, a.navbar:hover, a.navbar:active, a.navbar:visited, a.navbar:focus {
     text-decoration: none;
