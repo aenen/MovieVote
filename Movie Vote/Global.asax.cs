@@ -20,6 +20,9 @@ namespace Movie_Vote
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new MultiLanguageViewEngine());
 
             if (bool.Parse(ConfigurationManager.AppSettings["MigrateDatabaseToLatestVersion"]))
             {

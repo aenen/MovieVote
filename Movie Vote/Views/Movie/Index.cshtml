@@ -3,11 +3,11 @@
 @using System.ComponentModel.DataAnnotations;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Всі фільми";
     var props = Model.First().GetType().GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 }
 
-<h2>Index</h2>
+<h2>Список фільмів</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create") | @Html.ActionLink("Logout", "Logout", "Admin")

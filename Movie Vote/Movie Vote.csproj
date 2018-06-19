@@ -126,6 +126,9 @@
     <Content Include="Content\icomoon\fonts\icomoon.svg" />
     <Content Include="Content\icomoon\style.css" />
     <Content Include="Content\favicon.png" />
+    <Content Include="Content\Images\Russia.png" />
+    <Content Include="Content\Images\Ukraine.png" />
+    <Content Include="Content\Images\United-States-of-America.png" />
     <Content Include="Content\loading.gif" />
     <Content Include="Content\loading_dark.gif" />
     <Content Include="Content\nopicture.gif" />
@@ -171,14 +174,43 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Content\Texts\RGlobal.Designer.cs">
+      <DependentUpon>RGlobal.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Content\Texts\RError.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RError.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\RGlobal.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RGlobal.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\RGlobal.ru-RU.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RGlobal.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\RHome.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RHome.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\MovieInfoController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Helpers\IEnumerableHelpers.cs" />
+    <Compile Include="Helpers\MultiLanguageViewEngine.cs" />
+    <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +233,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\ru-RU\" />
+    <Folder Include="Content\Images\uk-UA\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Home\en-US\" />
+    <Folder Include="Views\Home\ru-RU\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Movie Vote Data\Movie Vote Data.csproj">
@@ -211,6 +247,32 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Texts\RGlobal.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RGlobal.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\RGlobal.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RGlobal.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\RError.en-US.resx" />
+    <EmbeddedResource Include="Content\Texts\RError.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RError.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\RGlobal.ru-RU.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RGlobal.ru-RU.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\RError.ru-RU.resx" />
+    <EmbeddedResource Include="Content\Texts\RHome.en-US.resx" />
+    <EmbeddedResource Include="Content\Texts\RHome.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RHome.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\RHome.ru-RU.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
