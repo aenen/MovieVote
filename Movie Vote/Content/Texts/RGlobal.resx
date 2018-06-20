@@ -120,6 +120,9 @@
   <data name="Copyright" xml:space="preserve">
     <value>Ярославчик Інкорпорейтед</value>
   </data>
+  <data name="FooterAboutWebSite" xml:space="preserve">
+    <value>Про веб-сайт</value>
+  </data>
   <data name="FooterCredits" xml:space="preserve">
     <value>Подяки</value>
   </data>

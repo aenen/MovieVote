@@ -70,6 +70,15 @@ namespace Movie_Vote.Content.Texts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Про веб-сайт.
+        /// </summary>
+        public static string FooterAboutWebSite {
+            get {
+                return ResourceManager.GetString("FooterAboutWebSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Подяки.
         /// </summary>
         public static string FooterCredits {

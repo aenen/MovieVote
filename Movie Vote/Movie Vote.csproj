@@ -163,6 +163,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\multiLanguage.js" />
     <Content Include="Scripts\NoRazor.js" />
     <Content Include="Scripts\Pagination.js" />
     <Content Include="Web.config">
@@ -198,6 +199,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RHome.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\RHome.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RHome.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\RHome.ru-RU.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RHome.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -267,12 +278,18 @@
       <LastGenOutput>RGlobal.ru-RU.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Texts\RError.ru-RU.resx" />
-    <EmbeddedResource Include="Content\Texts\RHome.en-US.resx" />
+    <EmbeddedResource Include="Content\Texts\RHome.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RHome.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Content\Texts\RHome.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RHome.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Texts\RHome.ru-RU.resx" />
+    <EmbeddedResource Include="Content\Texts\RHome.ru-RU.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RHome.ru-RU.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

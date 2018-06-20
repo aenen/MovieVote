@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Movie_Vote.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         MovieContext context = new MovieContext();
         UserVote uv;

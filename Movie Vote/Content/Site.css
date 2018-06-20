@@ -42,7 +42,7 @@ div.loadingDots {
 
 @keyframes loadingDots {
     0%, 60%, 100% {
-        transform: initial;        
+        transform: initial;
     }
 
     30% {
@@ -138,8 +138,8 @@ ul.pagination li:not(.active) {
         overflow: hidden;
         display: none;
         font-size: 18px;
-        /*max-height: 0;*/
-        /*transition: max-height .2s ease-out;*/
+        /*max-height: 0;
+        transition: max-height .2s ease-out;*/
     }
 
         .section-filter .filter-body .filter-item-header {
@@ -147,34 +147,53 @@ ul.pagination li:not(.active) {
             color: rgb(92, 62, 92);
         }
 
-        .section-filter .filter-body.row {
+        /*.section-filter .filter-body.row {
             margin-bottom: 0;
-        }
+        }*/
 
-.filter-header {
+
+.slider-body {
+    overflow: hidden;
+    display: none;
+    /*max-height: 0;*/
+    /*transition: max-height .2s ease-out;*/
+}
+
+    .slider-body.row {
+        margin-bottom: 0;
+    }
+
+.slider-header {
     cursor: pointer;
     font-size: 20px;
     padding: 15px 0;
     transition: .4s;
 }
 
-    .filter-header:not(.active):after {
+    .slider-header:not(.active):after {
         font-size: 15px;
         font-family: "Glyphicons Halflings";
         content: "\e114";
     }
 
-    .filter-header.active {
+    .slider-header.active {
         border-bottom: 1px solid rgba(92,62,92,0.2);
         margin-bottom: 15px;
         background: -webkit-linear-gradient(left, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
         background: linear-gradient(to right, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
     }
 
-        .filter-header.active:after {
+        .slider-header.active:after {
             font-size: 15px;
             font-family: "Glyphicons Halflings";
             content: "\e113";
+        }
+
+    .slider-header.about-header {
+        border-bottom: 1px solid rgba(92,62,92,0.2);
+    }
+        .slider-header.about-header.active{
+            background: initial;
         }
 
 h2 {
@@ -370,8 +389,28 @@ a.navbar, a.navbar:hover, a.navbar:active, a.navbar:visited, a.navbar:focus {
     background-color: white;
 }
 
+.langs-container {
+    text-align: right;
+}
+
+ul.langs a img {
+    /*transition:filter ease-in-out .5s;*/
+}
+    ul.langs a img:not(.active-lang) {
+        filter: blur(1px);
+    }
+ul.langs a:hover img:not(.active-lang) {
+    filter: blur(0);
+}
+
 /*Small screen*/
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 768px) {
+    .footer-bottom, .langs-container {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 480px) {
     .display-wrapper {
         height: 300px;
     }

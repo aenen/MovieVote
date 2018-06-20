@@ -22,7 +22,7 @@ namespace Movie_Vote.Content.Texts {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class RHome {
+    public class RHome {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Movie_Vote.Content.Texts {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Movie_Vote.Content.Texts.RHome", typeof(RHome).Assembly);
@@ -51,12 +51,57 @@ namespace Movie_Vote.Content.Texts {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Жанри.
+        /// </summary>
+        public static string MovieInfoGenres {
+            get {
+                return ResourceManager.GetString("MovieInfoGenres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назва.
+        /// </summary>
+        public static string MovieInfoName {
+            get {
+                return ResourceManager.GetString("MovieInfoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Реліз.
+        /// </summary>
+        public static string MovieInfoRelease {
+            get {
+                return ResourceManager.GetString("MovieInfoRelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Фільм.
+        /// </summary>
+        public static string MovieTypeMovie {
+            get {
+                return ResourceManager.GetString("MovieTypeMovie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Серіал.
+        /// </summary>
+        public static string MovieTypeTv {
+            get {
+                return ResourceManager.GetString("MovieTypeTv", resourceCulture);
             }
         }
     }

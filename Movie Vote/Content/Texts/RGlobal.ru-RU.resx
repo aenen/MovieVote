@@ -120,6 +120,9 @@
   <data name="Copyright" xml:space="preserve">
     <value>Ярославчик Инкорпорейтэд</value>
   </data>
+  <data name="FooterAboutWebSite" xml:space="preserve">
+    <value>О веб-сайте</value>
+  </data>
   <data name="FooterCredits" xml:space="preserve">
     <value>Благодарности</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Microsoft за Visual Studio, .Net и Azure</value>
   </data>
   <data name="FooterImHere" xml:space="preserve">
-    <value>Я тут</value>
+    <value>Я здесь</value>
   </data>
   <data name="FooterSpecialCredits" xml:space="preserve">
     <value>Особая благодарность</value>

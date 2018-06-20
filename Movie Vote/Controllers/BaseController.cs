@@ -9,7 +9,7 @@ namespace Movie_Vote.Controllers
 {
     public abstract class BaseController : Controller
     {
-        private static string _cookieLangName = "LangForMultiLanguageDemo";
+        private static string _cookieLangName = "LangForMultiLanguage";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

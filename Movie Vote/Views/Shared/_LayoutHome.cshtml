@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Movie_Vote.Helpers
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,10 +20,13 @@
 
     <div>
         @RenderBody()
-        <footer class="container body-content">
-            <div class="row">
-                <div class="container col-md-4">
-                    <h3>Я тут</h3>
+        <footer class="container">
+            <div class="slider-header about-header text-center">
+                @RGlobal.FooterAboutWebSite
+            </div>
+            <div class="text-center row about-body slider-body">
+                <div class="col-sm-4">
+                    <h3>@RGlobal.FooterImHere</h3>
                     <div class="social-media">
                         <a target="_blank" href="https://github.com/aenen" class="icon-github"></a>
                         @*<a class="icon-twitter"></a>
@@ -31,26 +36,67 @@
                             <a class="icon-envelop"></a>*@
                     </div>
                 </div>
-                <div class="container col-md-4 ">
-                    <h3>Подяки</h3>
+                <div class="col-sm-4">
+                    <h3>@RGlobal.FooterCredits</h3>
                     <div class="cred cred-others">
-                        <a target="_blank" href="https://icons8.com/icon/51392/Retro-TV">Icons8 за іконку сайту</a>
-                        <a target="_blank" href="https://www.microsoft.com">Microsoft за Visual Studio, .Net та Azure</a>
-                        <a target="_blank" href="https://itstep.org/">IT Step за аккаунт в Microsoft Imagine</a>
+                        <a target="_blank" href="https://icons8.com/icon/51392/Retro-TV">@RGlobal.FooterCreditsIcons8</a>
+                        <a target="_blank" href="https://www.microsoft.com">@RGlobal.FooterCreditsMicrosoft</a>
+                        <a target="_blank" href="https://itstep.org/">@RGlobal.FooterCreditsItStep</a>
                         @*<a target="_blank" href="https://www.kickstarter.com/">Kickstarter за те, що зробив це можливим</a>*@
                     </div>
                 </div>
-                <div class="container col-md-4 ">
-                    <h3>Особлива подяка</h3>
+                <div class="col-sm-4 ">
+                    <h3>@RGlobal.FooterSpecialCredits</h3>
                     <a target="_blank" href="https://www.themoviedb.org">
-                        <img class="cred cred-tmdb" src="https://www.themoviedb.org/assets/static_cache/27b65cb40d26f78354a4ac5abf87b2be/images/v4/logos/powered-by-rectangle-green.svg" />
+                        <img class="cred cred-tmdb" alt="The Movie Database" src="https://www.themoviedb.org/assets/static_cache/27b65cb40d26f78354a4ac5abf87b2be/images/v4/logos/powered-by-rectangle-green.svg" />
                     </a>
                 </div>
             </div>
-            <p>&copy; 2017 - @DateTime.Now.Year <span class="glyphicon glyphicon-heart-empty text-danger"></span> Ярославчик Інкорпорейтед</p>
+            <div class="row footer-bottom" style="margin-top:15px">
+                <div class="col-sm-6">
+                    <p>&copy; 2017 - @DateTime.Now.Year <span class="glyphicon glyphicon-heart-empty text-danger"></span> @RGlobal.Copyright</p>
+                </div>
+                <div class="langs-container col-sm-6">
+                    <ul class="langs" style="list-style:none; padding-left:0">
+                        <li style="display:inline">
+                            <a href="" title="Українська" class="setLang" data-lang="uk-UA"><img height="20" src="@Url.GetImage("Ukraine.png", false)" /></a>
+                        </li>
+                        <li style="display:inline">
+                            <a href="" title="Русский" class="setLang" data-lang="ru-RU"><img height="20" src="@Url.GetImage("Russia.png",false)" /></a>
+                        </li>
+                        <li style="display:inline">
+                            <a href="" title="English" class="setLang" data-lang="en-US"><img height="20" src="@Url.GetImage("United-States-of-America.png", false)" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </footer>
+
     </div>
 
     @RenderSection("scripts")
+
+    <script src="~/Scripts/multiLanguage.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var lang = MultiLanguage.Cookies.getCookie("LangForMultiLanguage");
+            $(".setLang[data-lang='" + lang + "'] img").addClass("active-lang");
+
+            $(".setLang").on("click", function (event) {
+                var lang = $(this).attr("data-lang");
+                MultiLanguage.Cookies.setCookie("LangForMultiLanguage", lang, 30);
+                location.reload(true);
+            })
+
+            $(".slider-header").click(function (e) {
+                var sliderBody = $(this).siblings(".slider-body");
+                if (sliderBody.is(":animated"))
+                    return false;
+                $(this).toggleClass("active");
+                sliderBody.slideToggle();
+            });
+        });
+    </script>
 </body>
 </html>

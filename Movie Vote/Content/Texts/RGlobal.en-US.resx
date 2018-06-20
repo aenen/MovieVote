@@ -120,6 +120,9 @@
   <data name="Copyright" xml:space="preserve">
     <value>Yaroslavchik Incorporated</value>
   </data>
+  <data name="FooterAboutWebSite" xml:space="preserve">
+    <value>About the website</value>
+  </data>
   <data name="FooterCredits" xml:space="preserve">
     <value>Thanks</value>
   </data>

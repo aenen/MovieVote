@@ -17,10 +17,10 @@
 <div id="data-section" class="section-filter">
     <div class="container body-content">
         <div id="filter">
-            <div class="filter-header text-center">
+            <div class="filter-header slider-header text-center">
                 Фільтри
             </div>
-            <div class="text-center row filter-body">
+            <div class="text-center row slider-body filter-body">
                 <div class="col-sm-3">
                     <span class="filter-item-header">Додано:</span>
                     <div data-filter-type="date" class="list-group filter-group">
@@ -77,15 +77,15 @@
                                 <img class="img-medium movie-poster" src="~/Content/loading_dark.gif" />
                                 <div class="movie-info">
                                     <div class="row">
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">Назва:</div>
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoName):</div>
                                         <div class="col-sm-8 col-xs-8 col-lg-8 movie-name">-</div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">Реліз:</div>
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoRelease):</div>
                                         <div class="col-sm-8 col-xs-8 col-lg-8 movie-release">-</div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">Жанри:</div>
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoGenres):</div>
                                         <div class="col-sm-8 col-xs-8 col-lg-8 movie-genre">-</div>
                                     </div>
                                     <div class="description-wrapper">
@@ -103,11 +103,11 @@
                                 </button>
                                 @if (item.IsTvShow)
                                 {
-                                    <span class="type t-tv">Серіал</span>
+                                    <span class="type t-tv">@RHome.MovieTypeTv</span>
                                 }
                                 else
                                 {
-                                    <span class="type t-movie">Фільм</span>
+                                    <span class="type t-movie">@RHome.MovieTypeMovie</span>
                                 }
                             </div>
                         </div>
@@ -270,13 +270,13 @@
             $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
 
-            $(".filter-header").click(function (e) {
-                var filterBody = $(".filter-body");
-                if (filterBody.is(":animated"))
-                    return false;
-                $(this).toggleClass("active");
-                filterBody.slideToggle();
-            });
+            //$(".filter-header").click(function (e) {
+            //    var filterBody = $(".filter-body");
+            //    if (filterBody.is(":animated"))
+            //        return false;
+            //    $(this).toggleClass("active");
+            //    filterBody.slideToggle();
+            //});
 
             initElements();
         });
