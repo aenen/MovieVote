@@ -61,6 +61,141 @@ namespace Movie_Vote.Content.Texts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Фільтри.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Додано.
+        /// </summary>
+        public static string FilterAdded {
+            get {
+                return ResourceManager.GetString("FilterAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нові.
+        /// </summary>
+        public static string FilterAddedNew {
+            get {
+                return ResourceManager.GetString("FilterAddedNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Давні.
+        /// </summary>
+        public static string FilterAddedOld {
+            get {
+                return ResourceManager.GetString("FilterAddedOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Додатково.
+        /// </summary>
+        public static string FilterExtra {
+            get {
+                return ResourceManager.GetString("FilterExtra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Мої сердечка.
+        /// </summary>
+        public static string FilterExtraHeart {
+            get {
+                return ResourceManager.GetString("FilterExtraHeart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ярославчик рекомендує.
+        /// </summary>
+        public static string FilterExtraRecomend {
+            get {
+                return ResourceManager.GetString("FilterExtraRecomend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Рейтинг.
+        /// </summary>
+        public static string FilterRating {
+            get {
+                return ResourceManager.GetString("FilterRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Всі.
+        /// </summary>
+        public static string FilterRatingAll {
+            get {
+                return ResourceManager.GetString("FilterRatingAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Високий.
+        /// </summary>
+        public static string FilterRatingHigh {
+            get {
+                return ResourceManager.GetString("FilterRatingHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Низький.
+        /// </summary>
+        public static string FilterRatingLow {
+            get {
+                return ResourceManager.GetString("FilterRatingLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тип.
+        /// </summary>
+        public static string FilterType {
+            get {
+                return ResourceManager.GetString("FilterType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Всі.
+        /// </summary>
+        public static string FilterTypeAll {
+            get {
+                return ResourceManager.GetString("FilterTypeAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Фільми.
+        /// </summary>
+        public static string FilterTypeMovie {
+            get {
+                return ResourceManager.GetString("FilterTypeMovie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Серіали.
+        /// </summary>
+        public static string FilterTypeTv {
+            get {
+                return ResourceManager.GetString("FilterTypeTv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Жанри.
         /// </summary>
         public static string MovieInfoGenres {
@@ -102,6 +237,24 @@ namespace Movie_Vote.Content.Texts {
         public static string MovieTypeTv {
             get {
                 return ResourceManager.GetString("MovieTypeTv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Переглянуті мною фільми.
+        /// </summary>
+        public static string TitleLine1 {
+            get {
+                return ResourceManager.GetString("TitleLine1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Голосуй за найкращий!.
+        /// </summary>
+        public static string TitleLine2 {
+            get {
+                return ResourceManager.GetString("TitleLine2", resourceCulture);
             }
         }
     }

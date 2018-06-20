@@ -117,6 +117,51 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Filter" xml:space="preserve">
+    <value>Фільтри</value>
+  </data>
+  <data name="FilterAdded" xml:space="preserve">
+    <value>Додано</value>
+  </data>
+  <data name="FilterAddedNew" xml:space="preserve">
+    <value>Нові</value>
+  </data>
+  <data name="FilterAddedOld" xml:space="preserve">
+    <value>Давні</value>
+  </data>
+  <data name="FilterExtra" xml:space="preserve">
+    <value>Додатково</value>
+  </data>
+  <data name="FilterExtraHeart" xml:space="preserve">
+    <value>Мої сердечка</value>
+  </data>
+  <data name="FilterExtraRecomend" xml:space="preserve">
+    <value>Ярославчик рекомендує</value>
+  </data>
+  <data name="FilterRating" xml:space="preserve">
+    <value>Рейтинг</value>
+  </data>
+  <data name="FilterRatingAll" xml:space="preserve">
+    <value>Всі</value>
+  </data>
+  <data name="FilterRatingHigh" xml:space="preserve">
+    <value>Високий</value>
+  </data>
+  <data name="FilterRatingLow" xml:space="preserve">
+    <value>Низький</value>
+  </data>
+  <data name="FilterType" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="FilterTypeAll" xml:space="preserve">
+    <value>Всі</value>
+  </data>
+  <data name="FilterTypeMovie" xml:space="preserve">
+    <value>Фільми</value>
+  </data>
+  <data name="FilterTypeTv" xml:space="preserve">
+    <value>Серіали</value>
+  </data>
   <data name="MovieInfoGenres" xml:space="preserve">
     <value>Жанри</value>
   </data>
@@ -131,5 +176,11 @@
   </data>
   <data name="MovieTypeTv" xml:space="preserve">
     <value>Серіал</value>
+  </data>
+  <data name="TitleLine1" xml:space="preserve">
+    <value>Переглянуті мною фільми</value>
+  </data>
+  <data name="TitleLine2" xml:space="preserve">
+    <value>Голосуй за найкращий!</value>
   </data>
 </root>

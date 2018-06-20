@@ -9,8 +9,8 @@
 <div class="section-white">
     <div class="container body-content">
         <div>
-            <h2>Переглянуті мною фільми</h2>
-            <h5>Голосуй за найкращий!</h5>
+            <h2>@RHome.TitleLine1</h2>
+            <h5>@RHome.TitleLine2</h5>
         </div>
     </div>
 </div>
@@ -18,37 +18,37 @@
     <div class="container body-content">
         <div id="filter">
             <div class="filter-header slider-header text-center">
-                Фільтри
+                @RHome.Filter
             </div>
             <div class="text-center row slider-body filter-body">
                 <div class="col-sm-3">
-                    <span class="filter-item-header">Додано:</span>
+                    <span class="filter-item-header">@(RHome.FilterAdded):</span>
                     <div data-filter-type="date" class="list-group filter-group">
-                        <a data-value="new" class="list-group-item active">Нові</a>
-                        <a data-value="old" class="list-group-item">Давні</a>
+                        <a data-value="new" class="list-group-item active">@RHome.FilterAddedNew</a>
+                        <a data-value="old" class="list-group-item">@RHome.FilterAddedOld</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <span class="filter-item-header">Тип:</span>
+                    <span class="filter-item-header">@(RHome.FilterType):</span>
                     <div data-filter-type="type" class="list-group filter-group">
-                        <a data-value="all" class="list-group-item active">Всі</a>
-                        <a data-value="movie" class="list-group-item">Фільми</a>
-                        <a data-value="tv" class="list-group-item">Серіали</a>
+                        <a data-value="all" class="list-group-item active">@RHome.FilterTypeAll</a>
+                        <a data-value="movie" class="list-group-item">@RHome.FilterTypeMovie</a>
+                        <a data-value="tv" class="list-group-item">@RHome.FilterTypeTv</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <span class="filter-item-header">Рейтинг:</span>
+                    <span class="filter-item-header">@(RHome.FilterRating):</span>
                     <div data-filter-type="rate" class="list-group filter-group">
-                        <a data-value="all" class="list-group-item active">Всі</a>
-                        <a data-value="hight" class="list-group-item">Високий</a>
-                        <a data-value="low" class="list-group-item">Низький</a>
+                        <a data-value="all" class="list-group-item active">@RHome.FilterRatingAll</a>
+                        <a data-value="hight" class="list-group-item">@RHome.FilterRatingHigh</a>
+                        <a data-value="low" class="list-group-item">@RHome.FilterRatingLow</a>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <span class="filter-item-header">Додатково:</span>
+                    <span class="filter-item-header">@(RHome.FilterExtra):</span>
                     <div data-filter-type="extra" class="list-group filter-group filter-boolean">
-                        <a data-value="favorite" class="list-group-item">Ярославчик рекомендує</a>
-                        <a data-value="my_heart" class="list-group-item">Мої сердечка</a>
+                        <a data-value="favorite" class="list-group-item">@RHome.FilterExtraRecomend</a>
+                        <a data-value="my_heart" class="list-group-item">@RHome.FilterExtraHeart</a>
                     </div>
                 </div>
             </div>
