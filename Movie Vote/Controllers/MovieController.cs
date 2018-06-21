@@ -14,7 +14,7 @@ namespace Movie_Vote.Controllers
     public class MovieController : Controller
     {
         private MovieContext db = new MovieContext();
-        const int movies = 25;
+        const int movies = 44;
 
         // GET: Movie
         [Authorize]

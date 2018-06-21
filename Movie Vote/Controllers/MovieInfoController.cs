@@ -12,6 +12,7 @@ using RestSharp;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Dynamic;
+using System.Web;
 
 namespace Movie_Vote.Controllers
 {
@@ -23,14 +24,16 @@ namespace Movie_Vote.Controllers
         [Route("api/MovieInfo/Genres")]
         public JObject GetGenres()
         {
+            string locale = BaseController.GetCultureOnCookie(new HttpRequestWrapper(HttpContext.Current.Request));
+
             //movie
-            var clientMovie = new RestClient($"https://api.themoviedb.org/3/genre/movie/list?language=uk-UA&api_key={key}");
+            var clientMovie = new RestClient($"https://api.themoviedb.org/3/genre/movie/list?language={locale}&api_key={key}");
             var requestMovie = new RestRequest(Method.GET);
             IRestResponse responseMovie = clientMovie.Execute(requestMovie);
             JObject resultMovie = JObject.Parse(responseMovie.Content.Replace("genres", "genresMovie"));
 
             //tv
-            var clientTv = new RestClient($"https://api.themoviedb.org/3/genre/tv/list?language=uk-UA&api_key={key}");
+            var clientTv = new RestClient($"https://api.themoviedb.org/3/genre/tv/list?language={locale}&api_key={key}");
             var requestTv = new RestRequest(Method.GET);
             IRestResponse responseTv = clientTv.Execute(requestTv);
             JObject resultTv = JObject.Parse(responseTv.Content.Replace("genres", "genresTv"));
