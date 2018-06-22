@@ -136,9 +136,9 @@
 @section scripts
 {
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/Pagination.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/NoRazor.js"></script>
-    <script src="~/Scripts/Pagination.js"></script>
     <script>
 
         var paginationData = {
@@ -225,7 +225,7 @@
             });
         };
 
-        var initElements=function(){
+        function initElements(){
             $(".info:not(.clickadded)").click(function (e) {
                 var panel = $(this).closest(".panel-movie");
                 var poster = panel.find(".movie-poster");
@@ -269,15 +269,7 @@
         $(function () {
             $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
-
-            //$(".filter-header").click(function (e) {
-            //    var filterBody = $(".filter-body");
-            //    if (filterBody.is(":animated"))
-            //        return false;
-            //    $(this).toggleClass("active");
-            //    filterBody.slideToggle();
-            //});
-
+            
             initElements();
         });
     </script>
