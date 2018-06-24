@@ -37,7 +37,7 @@
                             container.append($("<li/>").append(clonedPageElement));
                         }
 
-                        container.find("a[data-page='" + currentPage + "']").click((e) => e.preventDefault()).parent("li").addClass("active");
+                        container.find("a[data-page='" + currentPage + "']").click(function (e) { e.preventDefault(); }).parent("li").addClass("active");
                         $(thisElement).append(container);
                     }
                 },
@@ -123,7 +123,7 @@
                         }
 
                         // Виділяю обрану сторінку як активну та додаю контейнер в елемент пейджингу
-                        container.find("a[data-page='" + currentPage + "']").click((e) => e.preventDefault()).parent("li").addClass("active");
+                        container.find("a[data-page='" + currentPage + "']").click(function (e) { e.preventDefault(); }).parent("li").addClass("active");
                         container.appendTo(thisElement);
 
                         /**
@@ -240,7 +240,9 @@
 
                     onSuccess();
                 },
-                error: () => onError()
+                error: function () {
+                    onError();
+                }
             });
         }
 

@@ -38,7 +38,7 @@ MultiLanguage.Cookies.getCookie = function (ck_name) {
         ck_start = ck_value.indexOf(ck_name + "=");
     }
     if (ck_start == -1) {
-        ck_value = null;
+        ck_value = "uk-UA";
     } else {
         ck_start = ck_value.indexOf("=", ck_start) + 1;
         var ck_end = ck_value.indexOf(";", ck_start);

@@ -149,16 +149,16 @@
                 $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
                 loading(true);
             },
-            afterLoadPageSuccess: () => loading(false),
-            afterLoadPageError: () => loading(false),
+            afterLoadPageSuccess: function() { loading(false); },
+            afterLoadPageError: function() { loading(false); },
 
             loadMoreButton: true,
-            beforeLoadMore: () => loading(true),
-            afterLoadMoreSuccess: () => loading(false),
-            afterLoadMoreError: () => loading(false),
+            beforeLoadMore: function () { loading(true); },
+            afterLoadMoreSuccess: function() { loading(false); },
+            afterLoadMoreError: function() { loading(false); },
 
             paginationStyle: "allPagesShrink",
-            visiblePagesCount: 5,
+            visiblePagesCount: 5
         };
         var contentPages = @ViewBag.Pages;
         var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
@@ -267,8 +267,8 @@
         };
 
         $(function () {
-            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
+            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
             
             initElements();
         });
