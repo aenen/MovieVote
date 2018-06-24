@@ -136,10 +136,28 @@
 @section scripts
 {
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/Pagination.js"></script>
+    <script src="~/Scripts/paginationAjax.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/NoRazor.js"></script>
     <script>
+        $(function () {
+
+            var contentPages = @ViewBag.Pages;
+            var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
+            $(".panel-movie").each(function (index, element) {
+                var id = GetId(this);
+                for (var i in votedMov){
+                    if (votedMov[i] == id){
+                        $(element).removeClass("panel-default").addClass("panel-danger").find(".vote").addClass("active");
+                    }
+                }
+            });
+
+            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
+            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
+
+            initElements();
+        });
 
         var paginationData = {
             dataElementSelector: "#data",
@@ -160,16 +178,6 @@
             paginationStyle: "allPagesShrink",
             visiblePagesCount: 5
         };
-        var contentPages = @ViewBag.Pages;
-        var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
-        $(".panel-movie").each(function (index, element) {
-            var id = GetId(this);
-            for (var i in votedMov){
-                if (votedMov[i] == id){
-                    $(element).removeClass("panel-default").addClass("panel-danger").find(".vote").addClass("active");
-                }
-            }
-        });
 
         function loading(isLoading) {
             if (isLoading) {
@@ -265,12 +273,5 @@
                 });
             }).addClass("clickadded");
         };
-
-        $(function () {
-            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
-            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
-            
-            initElements();
-        });
     </script>
 }
