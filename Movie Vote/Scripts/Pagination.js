@@ -1,12 +1,29 @@
 ﻿(function ($) {
 
     $.fn.pagination = function (pageUrl, totalPages, options) {
+                
         var thisElement = this;
         var defaultSettings = getDefaultSettings();
         var settings = $.extend({}, defaultSettings, options);
         var style = getDefaultStyles();
 
         style[settings.paginationStyle].create(settings.currentPage, totalPages);
+
+
+
+        /**
+        * @summary Повертає об'єкт зі стандартними налаштуваннями.
+        */
+        function getDefaultSettings() {
+            return {
+                currentPage: 1,
+                urlParameters: {},                  // Додаткові параметри сторінки, яка завантажується.
+                dontLoadActiveOrDisabledPage: true, // true - не завантажує сторінки з класами "active" чи "disabled".
+                paginationStyle: "allPages",        // "allPages", "allPagesShrink".
+                paginationStyleFlexible: false,     // true - кількість сторінок підлаштовується під розмір контейнеру.
+                visiblePagesCount: 5,               // Кількість сторінок, які відображаються (стилі: "allPagesShrink").
+            };
+        }
 
         /**
         * @summary Повертає об'єкт зі стандартними стилями.
@@ -68,7 +85,7 @@
                         var pageElement = $("<a/>", { class: "page", 'data-page': 1 });
                         var dropdown = $("<li/>")
                             .append($("<div/>", { class: "dropup btn-group", style: "display:block" })
-                                .append($("<button/>", { class: "btn btn-default dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
+                                .append($("<button/>", { class: "btn dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
 
                         // Данні по сторінкам:
                         var visiblePages = settings.visiblePagesCount;
@@ -150,21 +167,6 @@
                         }
                     }
                 }
-            };
-        }
-
-
-        /**
-        * @summary Повертає об'єкт зі стандартними налаштуваннями.
-        */
-        function getDefaultSettings() {
-            return {
-                currentPage: 1,
-                urlParameters: {},                  // Додаткові параметри сторінки, яка завантажується.
-                dontLoadActiveOrDisabledPage: true, // true - не завантажує сторінки з класами "active" чи "disabled".
-                paginationStyle: "allPages",        // "allPages", "allPagesShrink".
-                paginationStyleFlexible: false,     // true - кількість сторінок підлаштовується під розмір контейнеру.
-                visiblePagesCount: 5,               // Кількість сторінок, які відображаються (стилі: "allPagesShrink").
             };
         }
     }

@@ -5,10 +5,11 @@
         var defaultSettings = getDefaultSettings();
         var settings = $.extend({}, defaultSettings, options);
         var style = getDefaultStyles();
+        var lang = getDefaultLanguages();
 
         style[settings.paginationStyle].create(1, totalPages);
-
-
+        
+        
 
         /**
          * @summary Натиснення на елемент сторінки (ul.pagination li a.page).
@@ -77,6 +78,20 @@
             });
         }
 
+        function getDefaultLanguages() {
+            return {
+                "uk-UA": {
+                    "loadMore": "Завантажити ще"
+                },
+                "ru-RU": {
+                    "loadMore": "Загрузить еще"
+                },
+                "en-US": {
+                    "loadMore": "Load more"
+                }
+            }
+        }
+
         /**
         * @summary Повертає об'єкт зі стандартними налаштуваннями.
         */
@@ -84,6 +99,7 @@
             return {
                 dataElementSelector: "#pageData", // Елемент, в який завантажуються дані сторінки.
                 urlParameters: {},                // Додаткові параметри сторінки, яка завантажується.
+                language: "uk-UA",                // Мова плагіну.
 
                 beforeLoadPage: $.noop,       // Метод виконується перед завантаженням обраної сторінки.
                 afterLoadPageSuccess: $.noop, // Метод виконується після успішного завантаженням обраної сторінки.
@@ -136,7 +152,7 @@
                             $("<button/>", {
                                 class: "btn btn-lg btn-primary",
                                 id: "load-more",
-                                text: "Завантажити ще"
+                                text: lang[settings.language].loadMore,
                             }).on("click", loadMoreClick).insertBefore(thisElement);
                         }
                     },
@@ -205,7 +221,7 @@
                         var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
                         var dropdown = $("<li/>")
                             .append($("<div/>", { class: "dropup btn-group", style: "display:block" })
-                                .append($("<button/>", { class: "btn btn-default dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
+                                .append($("<button/>", { class: "btn dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
 
                         // Данні по сторінкам:
                         var visiblePages = settings.visiblePagesCount;
@@ -264,7 +280,7 @@
                             $("<button/>", {
                                 class: "btn btn-lg btn-primary",
                                 id: "load-more",
-                                text: "Завантажити ще"
+                                text: lang[settings.language].loadMore,
                             }).on("click", loadMoreClick).insertBefore($(thisElement).children("ul.pagination"));
                         }
 

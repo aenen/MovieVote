@@ -1,4 +1,5 @@
-﻿/* --- Необхідні речі --- */
+﻿
+/* --- Необхідні речі --- */
 
 ul.pagination > li {
     display: inline-block;
@@ -12,6 +13,7 @@ ul.pagination .dropdown-toggle {
     border-radius: 0;
     margin-left: -1px !important;
     border-color: #dddddd;
+    background-color: white;
 }
 
 ul.pagination .dropdown-menu {
@@ -35,11 +37,23 @@ ul.pagination .dropdown-menu {
         cursor: default;
     }
 
+#load-more {
+    border: none;
+}
 
 
 /* --- Тема "Nocturnal Purple" --- */
 
-.t-nocturnal-purple ul.pagination > li:not(.active) > a {
+.t-nocturnal-purple ul.pagination > li > a,
+.t-nocturnal-purple ul.pagination .dropdown-toggle {
+    border-color: #dcd6dc;
+}
+
+.t-nocturnal-purple ul.pagination li:not(.active) > a {
+    color: #5c3e5c;
+}
+
+.t-nocturnal-purple ul.pagination .dropdown-toggle {
     color: #5c3e5c;
 }
 
@@ -50,11 +64,83 @@ ul.pagination .dropdown-menu {
     border-color: #5c3e5c;
 }
 
-.t-nocturnal-purple ul.pagination .dropdown-toggle {
-    color: #5c3e5c;
+.t-nocturnal-purple ul.pagination li > a:focus,
+.t-nocturnal-purple ul.pagination li > a:hover,
+.t-nocturnal-purple ul.pagination .dropdown-toggle:hover,
+.t-nocturnal-purple ul.pagination .dropdown-toggle:focus {
+    background-color: #f1e9f1;
 }
 
 .t-nocturnal-purple #load-more {
     background-color: #5c3e5c;
-    border-color: #492d49;
+}
+
+
+
+/* --- Тема "Rusty Orange" --- */
+
+.t-rusty-orange ul.pagination > li > a,
+.t-rusty-orange ul.pagination .dropdown-toggle {
+    border-color: #faebcc;
+}
+
+.t-rusty-orange ul.pagination li:not(.active) > a {
+    color: #F0AD4E;
+}
+
+.t-rusty-orange ul.pagination li.active > a,
+.t-rusty-orange ul.pagination li.active > a:focus,
+.t-rusty-orange ul.pagination li.active > a:hover {
+    background-color: #F0AD4E;
+    border-color: #F0AD4E;
+}
+
+.t-rusty-orange ul.pagination li > a:focus,
+.t-rusty-orange ul.pagination li > a:hover,
+.t-rusty-orange ul.pagination .dropdown-toggle:hover,
+.t-rusty-orange ul.pagination .dropdown-toggle:focus {
+    background-color: #FEFEFA;
+}
+
+.t-rusty-orange ul.pagination .dropdown-toggle {
+    color: #F0AD4E;
+}
+
+.t-rusty-orange #load-more {
+    background-color: #F0AD4E;
+}
+
+
+
+/* --- Тема "Sweet Pink" --- */
+
+.t-sweet-pink ul.pagination > li > a,
+.t-sweet-pink ul.pagination .dropdown-toggle {
+    border-color: #ffd9d9;
+}
+
+.t-sweet-pink ul.pagination li:not(.active) > a {
+    color: #F2B6C7;
+}
+
+.t-sweet-pink ul.pagination li.active > a,
+.t-sweet-pink ul.pagination li.active > a:focus,
+.t-sweet-pink ul.pagination li.active > a:hover {
+    background-color: #F2B6C7;
+    border-color: #F2B6C7;
+}
+
+.t-sweet-pink ul.pagination li > a:focus,
+.t-sweet-pink ul.pagination li > a:hover,
+.t-sweet-pink ul.pagination .dropdown-toggle:hover,
+.t-sweet-pink ul.pagination .dropdown-toggle:focus {
+    background-color: #FFF7F9;
+}
+
+.t-sweet-pink ul.pagination .dropdown-toggle {
+    color: #F2B6C7;
+}
+
+.t-sweet-pink #load-more {
+    background-color: #F2B6C7;
 }

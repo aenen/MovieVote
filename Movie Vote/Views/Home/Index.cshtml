@@ -162,6 +162,7 @@
         var paginationData = {
             dataElementSelector: "#data",
             urlParameters: getFilterParams(),
+            language: MultiLanguage.Cookies.getCookie("LangForMultiLanguage"),
 
             beforeLoadPage: function () {
                 $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
