@@ -1,0 +1,60 @@
+﻿/* --- Необхідні речі --- */
+
+ul.pagination > li {
+    display: inline-block;
+}
+
+    ul.pagination > li:not(.active) {
+        cursor: pointer;
+    }
+
+ul.pagination .dropdown-toggle {
+    border-radius: 0;
+    margin-left: -1px !important;
+    border-color: #dddddd;
+}
+
+ul.pagination .dropdown-menu {
+    max-height: 150px;
+    min-width: initial;
+    right: -10px;
+    left: -10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+    ul.pagination .dropdown-menu li a {
+        padding: 3px 0;
+    }
+
+    ul.pagination .dropdown-menu li.active a,
+    ul.pagination .dropdown-menu li.active a:hover,
+    ul.pagination .dropdown-menu li.active a:focus {
+        color: white;
+        cursor: default;
+    }
+
+
+
+/* --- Тема "Nocturnal Purple" --- */
+
+.t-nocturnal-purple ul.pagination > li:not(.active) > a {
+    color: #5c3e5c;
+}
+
+.t-nocturnal-purple ul.pagination li.active > a,
+.t-nocturnal-purple ul.pagination li.active > a:focus,
+.t-nocturnal-purple ul.pagination li.active > a:hover {
+    background-color: #5c3e5c;
+    border-color: #5c3e5c;
+}
+
+.t-nocturnal-purple ul.pagination .dropdown-toggle {
+    color: #5c3e5c;
+}
+
+.t-nocturnal-purple #load-more {
+    background-color: #5c3e5c;
+    border-color: #492d49;
+}
