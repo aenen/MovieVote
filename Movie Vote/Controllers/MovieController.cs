@@ -13,14 +13,14 @@ namespace Movie_Vote.Controllers
 {
     public class MovieController : Controller
     {
-        private MovieContext db = new MovieContext();
+        readonly MovieContext db = new MovieContext();
         const int movies = 44;
 
         // GET: Movie
         [Authorize]
         public ActionResult Index(int page = 1, string filterName = "Id", bool isFilterAscending = false)
         {            
-            IEnumerable<Movie> result = db.Movies.ToList().OrderByProperty(filterName, isFilterAscending);
+            IEnumerable<Movie> result = db.Movies.OrderByProperty(filterName, isFilterAscending);
 
             int count = result.Count();
             int pages = count / movies + ((count % movies == 0) ? 0 : 1);
@@ -51,6 +51,7 @@ namespace Movie_Vote.Controllers
         {
             if (ModelState.IsValid)
             {
+                movie.Watched = DateTime.Now;
                 db.Movies.Add(movie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -87,6 +88,7 @@ namespace Movie_Vote.Controllers
             {
                 db.Entry(movie).State = EntityState.Modified;
                 db.Entry(movie).Property(p => p.Rate).IsModified = false;
+                db.Entry(movie).Property(p => p.Watched).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

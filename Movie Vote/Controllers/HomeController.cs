@@ -10,8 +10,7 @@ namespace Movie_Vote.Controllers
 {
     public class HomeController : BaseController
     {
-        MovieContext context = new MovieContext();
-        UserVote uv;
+        readonly MovieContext context = new MovieContext();
         const int movies = 12;
 
         // GET: Home
@@ -22,7 +21,7 @@ namespace Movie_Vote.Controllers
 
             ViewBag.Pages = pages;
 
-            uv = Session["UserVote"] == null ? new UserVote(Session.SessionID) : (UserVote)Session["UserVote"];
+            UserVote uv = Session["UserVote"] == null ? new UserVote(Session.SessionID) : (UserVote)Session["UserVote"];
             Session["UserVote"] = uv;
             return View(context.Movies.OrderByDescending(o => o.Id).Take(movies));
         }

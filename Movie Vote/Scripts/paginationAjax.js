@@ -2,10 +2,10 @@
 
     $.fn.paginationAjax = function (pageDataUrl, totalPages, options) {
         var thisElement = this;
-        var defaultSettings = getDefaultSettings();
-        var settings = $.extend({}, defaultSettings, options);
         var style = getDefaultStyles();
         var lang = getDefaultLanguages();
+        var defaultSettings = getDefaultSettings();
+        var settings = $.extend({}, defaultSettings, options);
 
         style[settings.paginationStyle].create(1, totalPages);
         
@@ -22,7 +22,6 @@
             }
 
             var page = $(this).data("page");
-            var self = this;
 
             settings.beforeLoadPage();
             loadPage(page, false, function () {
@@ -41,7 +40,6 @@
                 }
             }
 
-            var self = this;
             var page = $("ul.pagination > li.active > a").last().data("page") + 1;
 
             settings.beforeLoadMore();
@@ -89,7 +87,7 @@
                 "en-US": {
                     "loadMore": "Load more"
                 }
-            }
+            };
         }
 
         /**
@@ -113,7 +111,7 @@
                 dontLoadActiveOrDisabledPage: true, // true - не завантажує сторінки з класами "active" чи "disabled".
                 paginationStyle: "allPages",        // "allPages", "allPagesShrink".
                 paginationStyleFlexible: false,     // true - кількість сторінок підлаштовується під розмір контейнеру.
-                visiblePagesCount: 5,               // Кількість сторінок, які відображаються (стилі: "allPagesShrink").
+                visiblePagesCount: 5               // Кількість сторінок, які відображаються (стилі: "allPagesShrink").
             };
         }
 
@@ -152,7 +150,7 @@
                             $("<button/>", {
                                 class: "btn btn-lg btn-primary",
                                 id: "load-more",
-                                text: lang[settings.language].loadMore,
+                                text: lang[settings.language].loadMore
                             }).on("click", loadMoreClick).insertBefore(thisElement);
                         }
                     },
@@ -238,11 +236,11 @@
                                 visiblePagesLeft = visiblePagesRight = parseInt(visiblePages / 2);
                             }
                         }
-                        var pageFrom = (currentPage - visiblePagesLeft > 0) ? currentPage - visiblePagesLeft : 1;
-                        var pageTo = (currentPage + visiblePagesRight < totalPages) ? currentPage + visiblePagesRight : totalPages;
+                        var pageFrom = currentPage - visiblePagesLeft > 0 ? currentPage - visiblePagesLeft : 1;
+                        var pageTo = currentPage + visiblePagesRight < totalPages ? currentPage + visiblePagesRight : totalPages;
                         if (visiblePages < totalPages) {
-                            pageTo = (currentPage - pageFrom < visiblePagesLeft) ? pageTo + (visiblePagesLeft - currentPage + 1) : pageTo;
-                            pageFrom = (pageTo - currentPage < visiblePagesRight) ? pageFrom - (visiblePagesRight - (pageTo - currentPage)) : pageFrom;
+                            pageTo = currentPage - pageFrom < visiblePagesLeft ? pageTo + (visiblePagesLeft - currentPage + 1) : pageTo;
+                            pageFrom = pageTo - currentPage < visiblePagesRight ? pageFrom - (visiblePagesRight - (pageTo - currentPage)) : pageFrom;
                         }
 
                         // Якщо обрана сторінка не перша - створю кнопку "назад"
@@ -280,7 +278,7 @@
                             $("<button/>", {
                                 class: "btn btn-lg btn-primary",
                                 id: "load-more",
-                                text: lang[settings.language].loadMore,
+                                text: lang[settings.language].loadMore
                             }).on("click", loadMoreClick).insertBefore($(thisElement).children("ul.pagination"));
                         }
 
@@ -331,7 +329,7 @@
                             if (visiblePages % 2 == 0) {
                                 visiblePagesLeft = visiblePages / 2 - 1;
                             } else {
-                                visiblePagesLeft = visiblePagesRight = parseInt(visiblePages / 2);
+                                visiblePagesLeft = parseInt(visiblePages / 2);
                             }
                         }
 

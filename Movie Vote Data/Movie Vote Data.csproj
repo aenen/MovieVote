@@ -74,6 +74,14 @@
     <Compile Include="Migrations\201805181450482_DeleteExtras.Designer.cs">
       <DependentUpon>201805181450482_DeleteExtras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806301300454_AddWatched.cs" />
+    <Compile Include="Migrations\201806301300454_AddWatched.Designer.cs">
+      <DependentUpon>201806301300454_AddWatched.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806301348098_AddWatched1.cs" />
+    <Compile Include="Migrations\201806301348098_AddWatched1.Designer.cs">
+      <DependentUpon>201806301348098_AddWatched1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +104,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805181450482_DeleteExtras.resx">
       <DependentUpon>201805181450482_DeleteExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806301300454_AddWatched.resx">
+      <DependentUpon>201806301300454_AddWatched.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806301348098_AddWatched1.resx">
+      <DependentUpon>201806301348098_AddWatched1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

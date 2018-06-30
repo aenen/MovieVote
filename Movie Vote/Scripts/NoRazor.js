@@ -13,6 +13,8 @@ var movieInfo = function (panel) {
     $.getJSON(URL + 'api/MovieInfo/Movie/' + id, function (data) {
         initMovie[$(panel).attr("data-type")].call(panel, data);
         $(panel).removeClass("no-init");
+    }).fail(function () {
+        $(panel).find(".movie-poster").attr("src", "/Content/noposter.png");
     });
 };
 //geting genres
@@ -24,6 +26,10 @@ $.getJSON(URL + 'api/MovieInfo/Genres', function (data) {
     genres.movie = data.genresMovie;
     genres.tv = data.genresTv;
     // додаю данні про фільми тут. знаю, що тупо, але по іншому не знаю як
+    $(".panel-movie").each(function (index, element) {
+        movieInfo(this);
+    });
+}).fail(function () {
     $(".panel-movie").each(function (index, element) {
         movieInfo(this);
     });

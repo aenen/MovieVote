@@ -44,11 +44,21 @@
             {
                 var propValue = prop.GetValue(item);
                 <td>
-                    @if (propValue!=null && propValue.GetType().Equals(typeof(short)))
+                    @if (propValue!=null)
                     {
-                        @:@propValue
-                    }
-                    @Html.DisplayFor(x => propValue)                    
+                        if (prop.PropertyType.IsEquivalentTo(typeof(short)))
+                        {
+                            @propValue
+                        }
+                        else if (prop.PropertyType.IsEquivalentTo(typeof(Nullable<DateTime>)))
+                        {
+                            @((propValue as DateTime?).ToString())
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(x => propValue)
+                        }
+                    }                  
                 </td>
             }
             <td>

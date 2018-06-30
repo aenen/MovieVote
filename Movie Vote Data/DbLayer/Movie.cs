@@ -19,12 +19,14 @@
         [Display(Name = "Year")]
         public short? Year { get; set; }
 
+        public DateTime? Watched { get; set; }
+
         [Display(Name = "Rate")]
         public short Rate { get; set; }
 
         [Display(Name = "TV")]
         public bool IsTvShow { get; set; }
-
+        
         [Display(Name = "♥")]
         public bool IsFavorite { get; set; }
     }

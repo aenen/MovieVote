@@ -75,6 +75,17 @@
                         <div class="panel-body">
                             <div class="display-wrapper">
                                 <img class="img-medium movie-poster" src="~/Content/loading_dark.gif" />
+                                <div class="watched-container">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                    @if (item.Watched.HasValue)
+                                    {
+                                        <span title="@item.Watched.ToString()"> @item.Watched.Value.ToShortDateString()</span>
+                                    }
+                                    else
+                                    {
+                                        <span title="2017-2018"> ?????</span>
+                                    }
+                                </div>
                                 <div class="movie-info">
                                     <div class="row">
                                         <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoName):</div>
@@ -238,6 +249,7 @@
             $(".info:not(.clickadded)").click(function (e) {
                 var panel = $(this).closest(".panel-movie");
                 var poster = panel.find(".movie-poster");
+                var watched = panel.find(".watched-container");
                 var info = panel.find(".movie-info");
 
                 if (info.is(":animated"))
@@ -246,8 +258,10 @@
                 $(this).toggleClass("active");
                 if ($(info).css("opacity") == 0) {
                     poster.css("filter", "blur(5px)");
+                    watched.css("filter", "blur(5px)");
                     info.show().animate({ "opacity": 1 }, 500);
                 } else {
+                    watched.css("filter", "blur(0px)");
                     poster.css("filter", "blur(0px)");
                     info.animate({ "opacity": 0 }, 500, function () { info.hide(); });
                 };
