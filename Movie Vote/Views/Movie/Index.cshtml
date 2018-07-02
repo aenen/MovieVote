@@ -46,7 +46,7 @@
                 <td>
                     @if (propValue!=null)
                     {
-                        if (prop.PropertyType.IsEquivalentTo(typeof(short)))
+                        if (prop.PropertyType.IsEquivalentTo(typeof(short))|| prop.PropertyType.IsEquivalentTo(typeof(Nullable<short>)))
                         {
                             @propValue
                         }

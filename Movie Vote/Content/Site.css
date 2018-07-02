@@ -26,7 +26,12 @@ textarea {
     right: 0;
     margin: 0 auto;
     z-index: 1;
+    -webkit-transition: -webkit-filter 0.5s ease;
+    transition: -webkit-filter 0.5s ease;
+    -o-transition: filter 0.5s ease;
+    -moz-transition: filter 0.5s ease;
     transition: filter 0.5s ease;
+    transition: filter 0.5s ease, -webkit-filter 0.5s ease;
     color: white;
 }
 
@@ -41,6 +46,7 @@ textarea {
         /*border: 3px dashed rgb(22, 2, 22);*/
         background-color: rgba(22, 2, 22, 0.75);
         -webkit-transform: perspective(50em) rotateX(-30deg);
+        -moz-transform: perspective(15em) rotateX(-30deg);
         transform: perspective(15em) rotateX(-30deg);
     }
 
@@ -55,26 +61,82 @@ div.loadingDots {
         display: inline-block;
         width: 12px;
         height: 12px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         border-radius: 50%;
         margin-right: 3px;
         background-color: transparent;
+        -webkit-animation: loadingDots 1s linear infinite;
+        -moz-animation: loadingDots 1s linear infinite;
+        -o-animation: loadingDots 1s linear infinite;
         animation: loadingDots 1s linear infinite;
     }
 
         div.loadingDots .dot:nth-child(2) {
+            -webkit-animation-delay: -0.75s;
+            -moz-animation-delay: -0.75s;
+            -o-animation-delay: -0.75s;
             animation-delay: -0.75s;
         }
 
         div.loadingDots .dot:nth-child(3) {
+            -webkit-animation-delay: -0.5s;
+            -moz-animation-delay: -0.5s;
+            -o-animation-delay: -0.5s;
             animation-delay: -0.5s;
         }
 
-@keyframes loadingDots {
+@-webkit-keyframes loadingDots {
     0%, 60%, 100% {
+        -webkit-transform: initial;
         transform: initial;
     }
 
     30% {
+        -webkit-transform: translateY(-15px);
+        transform: translateY(-15px);
+        background-color: #dcd1dc;
+    }
+}
+
+@-moz-keyframes loadingDots {
+    0%, 60%, 100% {
+        -moz-transform: initial;
+        transform: initial;
+    }
+
+    30% {
+        -moz-transform: translateY(-15px);
+        transform: translateY(-15px);
+        background-color: #dcd1dc;
+    }
+}
+
+@-o-keyframes loadingDots {
+    0%, 60%, 100% {
+        -o-transform: initial;
+        transform: initial;
+    }
+
+    30% {
+        -o-transform: translateY(-15px);
+        transform: translateY(-15px);
+        background-color: #dcd1dc;
+    }
+}
+
+@keyframes loadingDots {
+    0%, 60%, 100% {
+        -webkit-transform: initial;
+        -moz-transform: initial;
+        -o-transform: initial;
+        transform: initial;
+    }
+
+    30% {
+        -webkit-transform: translateY(-15px);
+        -moz-transform: translateY(-15px);
+        -o-transform: translateY(-15px);
         transform: translateY(-15px);
         background-color: #dcd1dc;
     }
@@ -130,6 +192,9 @@ div.loadingDots {
     cursor: pointer;
     font-size: 20px;
     padding: 15px 0;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    -moz-transition: .4s;
     transition: .4s;
 }
 
@@ -143,6 +208,9 @@ div.loadingDots {
         border-bottom: 1px solid rgba(92,62,92,0.2);
         margin-bottom: 15px;
         background: -webkit-linear-gradient(left, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
+        background: -webkit-gradient(linear, left top, right top, from(#e7e2e7),color-stop(#dcd1dc),color-stop(#d3c5d3),color-stop(#d3c5d3),color-stop(#dcd1dc), to(#e7e2e7));
+        background: -moz-linear-gradient(left, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
+        background: -o-linear-gradient(left, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
         background: linear-gradient(to right, #e7e2e7,#dcd1dc,#d3c5d3,#d3c5d3,#dcd1dc, #e7e2e7);
     }
 
@@ -155,7 +223,8 @@ div.loadingDots {
     .slider-header.about-header {
         border-bottom: 1px solid rgba(92,62,92,0.2);
     }
-        .slider-header.about-header.active{
+
+        .slider-header.about-header.active {
             background: initial;
         }
 
@@ -164,11 +233,21 @@ h2 {
 }
 
 .img-medium {
+    max-width: -webkit-calc(100% - 10px);
+    max-width: -moz-calc(100% - 10px);
     max-width: calc(100% - 10px);
+    max-height: -webkit-calc(100% - 10px);
+    max-height: -moz-calc(100% - 10px);
     max-height: calc(100% - 10px);
     position: absolute;
+    -webkit-filter: blur(0px);
     filter: blur(0px);
+    -webkit-transition: -webkit-filter 0.5s ease;
+    transition: -webkit-filter 0.5s ease;
+    -o-transition: filter 0.5s ease;
+    -moz-transition: filter 0.5s ease;
     transition: filter 0.5s ease;
+    transition: filter 0.5s ease, -webkit-filter 0.5s ease;
     top: 0;
     left: 0;
     right: 0;
@@ -180,6 +259,7 @@ h2 {
 .one-line {
     overflow: hidden;
     white-space: nowrap;
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }
 
@@ -229,6 +309,8 @@ h2 {
 
 .type {
     padding: 2px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
     border-radius: 5px;
     font-size: 19px;
     display: inline-block;
@@ -248,6 +330,8 @@ h2 {
 }
 
 .vote {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
     border-radius: 50%;
     padding-top: 10px;
     padding-right: 13px;
@@ -256,6 +340,8 @@ h2 {
 }
 
 .info {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
     border-radius: 50%;
     padding-top: 10px;
     position: absolute;
@@ -305,15 +391,24 @@ h2 {
 
 .navbar {
     background: -webkit-linear-gradient(bottom, rgb(22, 2, 22), rgb(92, 62, 92));
+    background: -webkit-gradient(linear, left bottom, left top, from(rgb(22, 2, 22)), to(rgb(92, 62, 92)));
+    background: -moz-linear-gradient(bottom, rgb(22, 2, 22), rgb(92, 62, 92));
+    background: -o-linear-gradient(bottom, rgb(22, 2, 22), rgb(92, 62, 92));
     background: linear-gradient(to top, rgb(22, 2, 22), rgb(92, 62, 92));
     display: -webkit-box;
     display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-box;
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
     align-items: center; /* Vertical center alignment */
     -webkit-box-pack: center;
     -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
     justify-content: center; /* Horizontal center alignment */
     border: none;
     font-size: 20px;
@@ -338,13 +433,22 @@ a.navbar, a.navbar:hover, a.navbar:active, a.navbar:visited, a.navbar:focus {
     text-overflow: clip;
     background: -webkit-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), -webkit-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), rgba(92,62,92,0.1);
     background: -moz-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), -moz-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), rgba(92,62,92,0.1);
+    background: -webkit-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), -webkit-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), rgba(92,62,92,0.15);
+    background: -moz-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), -moz-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), rgba(92,62,92,0.15);
+    background: -o-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), -o-radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), rgba(92,62,92,0.15);
     background: radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), radial-gradient(rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1%, rgba(255,255,255,0.5) 10%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 100%), rgba(92,62,92,0.15);
     background-position: 0 0, 5px 5px;
     -webkit-background-origin: padding-box;
+    -moz-background-origin: padding-box;
+    -o-background-origin: padding-box;
     background-origin: padding-box;
     -webkit-background-clip: border-box;
+    -moz-background-clip: border-box;
+    -o-background-clip: border-box;
     background-clip: border-box;
     -webkit-background-size: 10px 10px;
+    -moz-background-size: 10px 10px;
+    -o-background-size: 10px 10px;
     background-size: 10px 10px;
 }
 
@@ -356,10 +460,13 @@ a.navbar, a.navbar:hover, a.navbar:active, a.navbar:visited, a.navbar:focus {
     text-align: right;
 }
 
-    ul.langs a img:not(.active-lang) {
-        filter: blur(1px);
-    }
+ul.langs a img:not(.active-lang) {
+    -webkit-filter: blur(1px);
+    filter: blur(1px);
+}
+
 ul.langs a:hover img:not(.active-lang) {
+    -webkit-filter: blur(0);
     filter: blur(0);
 }
 

@@ -164,10 +164,11 @@
                 }
             });
 
+            initElements();
+
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
             $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
 
-            initElements();
         });
 
         var paginationData = {
