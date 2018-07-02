@@ -153,6 +153,8 @@
     <script>
         $(function () {
 
+            initElements();
+
             var contentPages = @ViewBag.Pages;
             var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
             $(".panel-movie").each(function (index, element) {
@@ -164,16 +166,15 @@
                 }
             });
 
-            initElements();
-
             $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
-            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);
+            var filterData = getFilterParams();
+            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: filterData }));
 
         });
-
+        
         var paginationData = {
             dataElementSelector: "#data",
-            urlParameters: getFilterParams(),
+            urlParameters: {},
             language: MultiLanguage.Cookies.getCookie("LangForMultiLanguage"),
 
             beforeLoadPage: function () {
@@ -241,7 +242,8 @@
             loading(true);
             var urlParams = $.param(getFilterParams());
             $("#data").load('@Url.Action("Page", "Home")?' + urlParams, function () {
-                $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: getFilterParams() }));
+                var filterData = getFilterParams();
+                $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: filterData }));
                 loading(false);
             });
         };
