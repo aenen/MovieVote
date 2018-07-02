@@ -147,51 +147,31 @@
 @section scripts
 {
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/paginationAjax.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Scripts/paginationAjax.js"></script>*@
     <script src="~/Scripts/NoRazor.js"></script>
     <script>
-        $(function () {
 
-            initElements();
+        //var paginationData = {
+        //    dataElementSelector: "#data",
+        //    urlParameters: getFilterParams(),
+        //    language: MultiLanguage.Cookies.getCookie("LangForMultiLanguage"),
 
-            var contentPages = @ViewBag.Pages;
-            var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
-            $(".panel-movie").each(function (index, element) {
-                var id = GetId(this);
-                for (var i in votedMov){
-                    if (votedMov[i] == id){
-                        $(element).removeClass("panel-default").addClass("panel-danger").find(".vote").addClass("active");
-                    }
-                }
-            });
+        //    beforeLoadPage: function () {
+        //        $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
+        //        loading(true);
+        //    },
+        //    afterLoadPageSuccess: function() { loading(false); },
+        //    afterLoadPageError: function() { loading(false); },
 
-            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
-            var filterData = getFilterParams();
-            $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: filterData }));
+        //    loadMoreButton: true,
+        //    beforeLoadMore: function () { loading(true); },
+        //    afterLoadMoreSuccess: function() { loading(false); },
+        //    afterLoadMoreError: function() { loading(false); },
 
-        });
-        
-        var paginationData = {
-            dataElementSelector: "#data",
-            urlParameters: {},
-            language: MultiLanguage.Cookies.getCookie("LangForMultiLanguage"),
-
-            beforeLoadPage: function () {
-                $('html, body').animate({ scrollTop: $('#data-section').position().top - 50 }, 'slow');
-                loading(true);
-            },
-            afterLoadPageSuccess: function() { loading(false); },
-            afterLoadPageError: function() { loading(false); },
-
-            loadMoreButton: true,
-            beforeLoadMore: function () { loading(true); },
-            afterLoadMoreSuccess: function() { loading(false); },
-            afterLoadMoreError: function() { loading(false); },
-
-            paginationStyle: "allPagesShrink",
-            visiblePagesCount: 5
-        };
+        //    paginationStyle: "allPagesShrink",
+        //    visiblePagesCount: 5
+        //};
 
         function loading(isLoading) {
             if (isLoading) {
@@ -242,8 +222,7 @@
             loading(true);
             var urlParams = $.param(getFilterParams());
             $("#data").load('@Url.Action("Page", "Home")?' + urlParams, function () {
-                var filterData = getFilterParams();
-                $("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: filterData }));
+                @*$("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, $.extend(paginationData, { urlParameters: getFilterParams() }));*@
                 loading(false);
             });
         };
@@ -291,5 +270,24 @@
                 });
             }).addClass("clickadded");
         };
+
+        $(function () {
+
+            var contentPages = @ViewBag.Pages;
+            var votedMov = @Html.Raw(Json.Encode(uv.MovieId));
+            $(".panel-movie").each(function (index, element) {
+                var id = GetId(this);
+                for (var i in votedMov){
+                    if (votedMov[i] == id){
+                        $(element).removeClass("panel-default").addClass("panel-danger").find(".vote").addClass("active");
+                    }
+                }
+            });
+
+            initElements();
+            $(".filter-group > a.list-group-item").on("click", filterItemEventClick);
+            @*$("#pagination").paginationAjax('@Url.Action("Page", "Home")', contentPages, paginationData);*@
+
+        });
     </script>
 }
