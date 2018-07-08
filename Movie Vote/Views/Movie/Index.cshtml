@@ -5,34 +5,178 @@
 @{
     ViewBag.Title = "Всі фільми";
     var props = Model.First().GetType().GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+    var MovieExample = new Movie_Vote_Data.DbLayer.Movie();
 }
 
 <h2>Список фільмів</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("Logout", "Logout", "Admin")
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create</button>
+    | @Html.ActionLink("Вийти", "Logout", "Admin")
 </p>
+
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="createModalLabel">Додати фільм</h4>
+            </div>
+            @using (Html.BeginForm("Create","Movie",FormMethod.Post))
+            {
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Name">Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" data-val-length="The field Name must be a string with a maximum length of 50." data-val-length-max="50" name="Name" type="text" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Year">Year</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" data-val-number="The field Year must be a number." name="Year" type="text" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Year" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="IsTvShow">TV</label>
+                        <div class="col-md-10">
+                            <input data-val="true" data-val-required="The TV field is required." name="IsTvShow" type="checkbox" value="true"><input name="IsTvShow" type="hidden" value="false">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="IsTvShow" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="IsFavorite">♥</label>
+                        <div class="col-md-10">
+                            <input data-val="true" data-val-required="The ♥ field is required." name="IsFavorite" type="checkbox" value="true"><input name="IsFavorite" type="hidden" value="false">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="IsFavorite" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                <input type="submit" value="Зберегти" class="btn btn-default" />
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="editModalLabel">Редагувати фільм </h4>
+            </div>
+            @using (Html.BeginForm("Edit", "Movie", FormMethod.Post))
+            {
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                <input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." name="Id" type="hidden">
+
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Name">Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" data-val-length="The field Name must be a string with a maximum length of 50." data-val-length-max="50" name="Name" type="text" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Year">Year</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" data-val-number="The field Year must be a number." name="Year" type="text" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Year" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="IsTvShow">TV</label>
+                        <div class="col-md-10">
+                            <input data-val="true" data-val-required="The TV field is required." name="IsTvShow" type="checkbox" value="true"><input name="IsTvShow" type="hidden" value="false">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="IsTvShow" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="IsFavorite">♥</label>
+                        <div class="col-md-10">
+                            <input data-val="true" data-val-required="The ♥ field is required." name="IsFavorite" type="checkbox" value="true"><input name="IsFavorite" type="hidden" value="false">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="IsFavorite" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Закрити</button>
+                <input type="submit" value="Зберегти" class="btn btn-default" />
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Видалити</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "Movie", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <p>Ти дійсно хочеш видалити фільм цей?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Закрити</button>
+                    <input type="submit" value="Видалити" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <tr>
         @foreach (var item in props)
-        {
-            bool ascending = ViewBag.FilterName == item.Name && !ViewBag.IsFilterAscending ? true : false;
-            string name = item.Name;
-            var displayName = item.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-            if (displayName != null)
             {
-                name = displayName.Name;
-            }
-            <th>
-                <a id="@item.Name" href="@Url.Action("Index", "Movie", new { filterName = item.Name, isFilterAscending = ascending })">
-                    @name
-                    @if(ViewBag.FilterName == item.Name)
-                    {
-                        @(ViewBag.IsFilterAscending? MvcHtmlString.Create("<span class=\"glyphicon glyphicon-chevron-up\"></span>"):
+                bool ascending = ViewBag.FilterName == item.Name && !ViewBag.IsFilterAscending ? true : false;
+                string name = item.Name;
+                var displayName = item.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+                if (displayName != null)
+                {
+                    name = displayName.Name;
+                }
+                <th>
+                    <a href="@Url.Action("Index", "Movie", new { filterName = item.Name, isFilterAscending = ascending })">
+                        @name
+                        @if (ViewBag.FilterName == item.Name)
+                        {
+                            @(ViewBag.IsFilterAscending ? MvcHtmlString.Create("<span class=\"glyphicon glyphicon-chevron-up\"></span>") :
                             MvcHtmlString.Create("<span class=\"glyphicon glyphicon-chevron-down\"></span>"))
-                    }
-                </a>
-            </th>
+                        }
+                    </a>
+                </th>
         }
         <th></th>
     </tr>
@@ -41,12 +185,12 @@
     {
         <tr>
             @foreach (var prop in props)
-            {
-                var propValue = prop.GetValue(item);
-                <td>
-                    @if (propValue!=null)
+                {
+                    var propValue = prop.GetValue(item);
+                <td data-name="@prop.Name" data-val="@propValue">
+                    @if (propValue != null)
                     {
-                        if (prop.PropertyType.IsEquivalentTo(typeof(short))|| prop.PropertyType.IsEquivalentTo(typeof(Nullable<short>)))
+                        if (prop.PropertyType.IsEquivalentTo(typeof(short)) || prop.PropertyType.IsEquivalentTo(typeof(Nullable<short>)))
                         {
                             @propValue
                         }
@@ -58,12 +202,12 @@
                         {
                             @Html.DisplayFor(x => propValue)
                         }
-                    }                  
+                    }
                 </td>
             }
             <td>
-                <a href="@Url.Action("Edit","Movie", new { id = item.Id })" class="glyphicon glyphicon-edit text-info"></a> |
-                <a href="@Url.Action("Delete","Movie", new { id = item.Id })" class="glyphicon glyphicon-remove text-danger"></a>
+                <button data-id="@item.Id" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-edit"></span></button>
+                <button data-id="@item.Id" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button>
             </td>
         </tr>
     }
@@ -71,9 +215,9 @@
 </table>
 
 @{
-            int pages = (int)ViewBag.Pages;
-            if (pages > 1)
-            {
+    int pages = (int)ViewBag.Pages;
+    if (pages > 1)
+    {
         <div class="text-center">
             <div id="pagination" class="t-nocturnal-purple">
                 <div class="loadingDots">
@@ -99,6 +243,35 @@
                     isFilterAscending: '@ViewBag.IsFilterAscending'
                 }
                 //paginationStyle:"allPagesShrink"
+            });
+
+            $('#editModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var movieId = button.data('id');
+                var modalForm = $("#editModal form").attr("action", '@Url.Action("Edit","Movie")/' + movieId);
+
+                button.closest("tr").children("td[data-name]").each(function (el, num) {
+                    var dataName = $(this).data("name");
+                    var dataVal = $(this).data("val");
+                    var input = modalForm.find("input[name='" + dataName + "']");
+
+                    if (input.attr("type") === "checkbox") {
+                        input.prop("checked", (dataVal === 'True'));
+                    } else {
+                        input.val(dataVal);
+                    }
+                });
+            });
+
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var movieId = button.data('id');
+                var movieName = button.closest("tr").children("td[data-name='Name']").data("val");
+                console.log(movieName);
+
+                $("#deleteModal form").attr("action", '@Url.Action("Delete","Movie")/' + movieId);
+                $("#deleteModal .modal-title").text("Видалення \"" + movieName+"\"")
+
             });
         });
     </script>
