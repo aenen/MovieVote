@@ -37,9 +37,9 @@
       return this;
     }
 
-
-
     return this;
+
+
 
     /**
      * @summary Натиснення на елемент сторінки (ul.pagination li a.page).
@@ -250,6 +250,11 @@
         */
         "allPagesShrink": {
 
+          "data": {
+            prewWidth: $(thisElement).width(),
+            visiblePages: $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible").length
+          },
+
           /**
            * @summary Створення елементів "пейджингу" (ul.pagination).
            *
@@ -265,6 +270,9 @@
               return false;
             }
 
+            $(window).off("resize", style[settings.paginationStyle].resize);
+            $(window).on("resize", style[settings.paginationStyle].resize);
+
             // Шаблони елементів та контейнер:
             var container = $("<ul/>", { class: "pagination" }).css("display", "block");
             var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
@@ -273,7 +281,8 @@
                 .append($("<button/>", { class: "btn dropdown-toggle", type: "button", 'data-toggle': "dropdown", text: "..." })));
 
             // Данні по сторінкам:
-            var visiblePages = settings.visiblePagesCount;
+            //style["allPagesShrink"].resize
+            var visiblePages = !style["allPagesShrink"].resize.data ? settings.visiblePagesCount : style["allPagesShrink"].resize.data;
             var visiblePagesLeft = totalPages;
             var visiblePagesRight = totalPages;
 
@@ -333,6 +342,8 @@
               }).on("click", loadMoreClick).insertBefore($(thisElement).children("ul.pagination"));
             }
 
+            $(thisElement).trigger("resize", [true]);
+
             /**
              * @summary Створює дродаун зі сторінками. 
              *
@@ -354,6 +365,105 @@
               }
 
             }
+          },
+
+          "resize": function (e, onCreate = false) {
+
+            var currentWidth = $(thisElement).width();
+            var liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+            var pages = $(thisElement).find("> ul.pagination > li:visible");
+
+            console.log(onCreate);
+            if (onCreate) {
+              pageBigger();
+              pageSmaller();
+            }
+
+            if (style["allPagesShrink"].resize.prevWidth === currentWidth) {
+              return false;
+            }
+
+            // Якщо ширина сторінки зменшилась
+            if (style["allPagesShrink"].resize.prevWidth > currentWidth) {
+              pageSmaller();
+            } else {
+              pageBigger();
+            }
+
+
+            //document.title = style["allPagesShrink"].resize.prevWidth + " / " + currentWidth;
+            style["allPagesShrink"].resize.data = liPages.length;
+            style["allPagesShrink"].resize.prevWidth = currentWidth;
+
+            function pageSmaller() {
+              if (pages.last().position().top > pages.first().position().top) {
+
+                while (pages.last().position().top > pages.first().position().top && liPages.length !== 1) {
+                  var currentElement = $(thisElement).find("> ul.pagination > li.active:visible").last();
+                  var hideFirst = currentElement.nextAll("li:has(> a:not(.page-nav))").length <= currentElement.prevAll("li:has(> a:not(.page-nav))").length;
+
+                  if (hideFirst) {
+                    if (!currentElement.is(liPages.first())) {
+                      $("ul.pagination li:has(div.dropup)").first().show().find("ul").append(liPages.first());
+                    }
+                  } else {
+                    if (!currentElement.is(liPages.last())) {
+                      $("ul.pagination li:has(div.dropup)").last().show().find("ul").prepend(liPages.last());
+                    }
+                  }
+
+                  liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+                  pages = $(thisElement).find("> ul.pagination > li:visible");
+                }
+              }
+            }
+
+            function pageBigger() {
+              var currentElement = $(thisElement).find("> ul.pagination > li.active:visible").last();
+              var dropPrev = $("ul.pagination li:has(div.dropup)").first().find("ul");
+              var dropNext = $("ul.pagination li:has(div.dropup)").last().find("ul");
+
+              while (dropPrev.find("li").length || dropNext.find("li").length) {
+
+                console.log(dropPrev.find("li").length);
+                console.log(dropNext.find("li").length);
+
+                var showFirst = currentElement.nextAll("li:has(> a:not(.page-nav))").length >= currentElement.prevAll("li:has(> a:not(.page-nav))").length;
+                showFirst = showFirst && !dropPrev.find("li").length ? false : showFirst;
+                showFirst = !showFirst && !dropNext.find("li").length ? true : showFirst;
+
+                console.log(showFirst);
+
+                if (showFirst) {
+                  dropPrev.find("li").last().insertBefore(liPages.first());
+                  liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+                  pages = $(thisElement).find("> ul.pagination > li:visible");
+                  if (pages.last().position().top > pages.first().position().top) {
+                    dropPrev.append(liPages.first());
+                    break;
+                  }
+                  dropPrev = $("ul.pagination li:has(div.dropup)").first().find("ul");
+                  if (!dropPrev.find("li").length) {
+                    $("ul.pagination li:has(div.dropup)").first().hide();
+                  }
+                } else {
+                  dropNext.find("li").first().insertAfter(liPages.last());
+                  liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+                  pages = $(thisElement).find("> ul.pagination > li:visible");
+                  if (pages.last().position().top > pages.first().position().top) {
+                    dropNext.prepend(liPages.last());
+                    break;
+                  }
+                  dropNext = $("ul.pagination li:has(div.dropup)").last().find("ul");
+                  if (!dropNext.find("li").length) {
+                    $("ul.pagination li:has(div.dropup)").last().hide();
+                  }
+                }
+
+                liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+              }
+            }
+
           },
 
           /**
