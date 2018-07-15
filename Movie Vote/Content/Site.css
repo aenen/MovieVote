@@ -15,6 +15,8 @@ textarea {
     max-width: 280px;
 }
 
+
+
 .watched-container {
     text-align: center;
     position: absolute;
@@ -470,24 +472,49 @@ ul.langs a:hover img:not(.active-lang) {
     filter: blur(0);
 }
 
-/*Small screen*/
-@media only screen and (max-width: 768px) {
-    .footer-bottom, .langs-container {
-        text-align: center;
+#pagination{
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    #pagination {
+        max-width: 350px;
     }
 }
 
-@media only screen and (max-width: 480px) {
-    .display-wrapper {
-        height: 300px;
-    }
-
-    .img-medium {
-        max-width: 96%;
-        max-height: 96%;
-    }
-
-    .watched-container {
-        top: 6px;
+@media (min-width: 992px) {
+    #pagination {
+        max-width: 400px;
     }
 }
+
+@media (min-width: 1200px) {
+    #pagination {
+        max-width: 500px;
+    }
+}
+
+    /*Small screen*/
+    @media only screen and (max-width: 768px) {
+        .footer-bottom, .langs-container {
+            text-align: center;
+        }
+        #pagination {
+            max-width: 350px;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .display-wrapper {
+            height: 300px;
+        }
+
+        .img-medium {
+            max-width: 96%;
+            max-height: 96%;
+        }
+
+        .watched-container {
+            top: 6px;
+        }
+    }
