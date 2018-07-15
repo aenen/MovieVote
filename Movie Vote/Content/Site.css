@@ -478,19 +478,19 @@ ul.langs a:hover img:not(.active-lang) {
 
 @media (min-width: 768px) {
     #pagination {
-        max-width: 350px;
+        max-width: 450px;
     }
 }
 
 @media (min-width: 992px) {
     #pagination {
-        max-width: 400px;
+        max-width: 500px;
     }
 }
 
 @media (min-width: 1200px) {
     #pagination {
-        max-width: 500px;
+        max-width: 550px;
     }
 }
 
@@ -500,7 +500,7 @@ ul.langs a:hover img:not(.active-lang) {
             text-align: center;
         }
         #pagination {
-            max-width: 350px;
+            max-width: 450px;
         }
     }
 
