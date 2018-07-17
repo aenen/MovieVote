@@ -251,8 +251,8 @@
         "allPagesShrink": {
 
           "data": {
-            prewWidth: $(thisElement).width(),
-            visiblePages: $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible").length
+            prevWidth: $(thisElement).width(),
+            //visiblePages: $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible").length
           },
 
           /**
@@ -269,10 +269,7 @@
             if (totalPages <= 1) {
               return false;
             }
-
-            $(window).off("resize", style[settings.paginationStyle].resize);
-            $(window).on("resize", style[settings.paginationStyle].resize);
-
+            
             // Шаблони елементів та контейнер:
             var container = $("<ul/>", { class: "pagination" }).css("display", "block");
             var pageElement = $("<a/>", { class: "page", 'data-page': 1 }).on("click", pageClick);
@@ -282,7 +279,7 @@
 
             // Данні по сторінкам:
             //style["allPagesShrink"].resize
-            var visiblePages = !style["allPagesShrink"].resize.data ? settings.visiblePagesCount : style["allPagesShrink"].resize.data;
+            var visiblePages = settings.visiblePagesCount;
             var visiblePagesLeft = totalPages;
             var visiblePagesRight = totalPages;
 
@@ -342,7 +339,11 @@
               }).on("click", loadMoreClick).insertBefore($(thisElement).children("ul.pagination"));
             }
 
-            $(thisElement).trigger("resize", [true]);
+            if (settings.paginationStyleFlexible) {
+              $(window).off("resize", style[settings.paginationStyle].resize);
+              $(window).on("resize", style[settings.paginationStyle].resize);
+              $(thisElement).trigger("resize", [true]);
+            }
 
             /**
              * @summary Створює дродаун зі сторінками. 
@@ -370,45 +371,48 @@
           "resize": function (e, onCreate = false) {
 
             var currentWidth = $(thisElement).width();
+
+            if (style["allPagesShrink"].data.prevWidth === currentWidth && !onCreate) {
+              return false;
+            }
+
             var liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
             var pages = $(thisElement).find("> ul.pagination > li:visible");
-
-            console.log(onCreate);
+            var currentElement = $(thisElement).find("> ul.pagination > li.active:visible").last();
+            var prevDropDown = $("ul.pagination li:has(div.dropup)").first();
+            var nextDropDown = $("ul.pagination li:has(div.dropup)").last();
+            
             if (onCreate) {
               pageBigger();
               pageSmaller();
             }
 
-            if (style["allPagesShrink"].resize.prevWidth === currentWidth) {
-              return false;
-            }
-
             // Якщо ширина сторінки зменшилась
-            if (style["allPagesShrink"].resize.prevWidth > currentWidth) {
+            if (style["allPagesShrink"].data.prevWidth > currentWidth) {
               pageSmaller();
             } else {
               pageBigger();
             }
-
-
-            //document.title = style["allPagesShrink"].resize.prevWidth + " / " + currentWidth;
-            style["allPagesShrink"].resize.data = liPages.length;
-            style["allPagesShrink"].resize.prevWidth = currentWidth;
-
+            
+            style["allPagesShrink"].data.prevWidth = currentWidth;
+            settings.visiblePagesCount = liPages.length;
+                        
             function pageSmaller() {
+
               if (pages.last().position().top > pages.first().position().top) {
 
                 while (pages.last().position().top > pages.first().position().top && liPages.length !== 1) {
-                  var currentElement = $(thisElement).find("> ul.pagination > li.active:visible").last();
-                  var hideFirst = currentElement.nextAll("li:has(> a:not(.page-nav))").length <= currentElement.prevAll("li:has(> a:not(.page-nav))").length;
+                  var prevFromCurrent = currentElement.prevAll("li:has(> a:not(.page-nav))");
+                  var nextFromCurrent = currentElement.nextAll("li:has(> a:not(.page-nav))");
+                  var hideLeft = nextFromCurrent.length <= prevFromCurrent.length;
 
-                  if (hideFirst) {
+                  if (hideLeft) {
                     if (!currentElement.is(liPages.first())) {
-                      $("ul.pagination li:has(div.dropup)").first().show().find("ul").append(liPages.first());
+                      prevDropDown.show().find("ul").append(liPages.first());
                     }
                   } else {
                     if (!currentElement.is(liPages.last())) {
-                      $("ul.pagination li:has(div.dropup)").last().show().find("ul").prepend(liPages.last());
+                      nextDropDown.show().find("ul").prepend(liPages.last());
                     }
                   }
 
@@ -419,51 +423,44 @@
             }
 
             function pageBigger() {
-              var currentElement = $(thisElement).find("> ul.pagination > li.active:visible").last();
-              var dropPrev = $("ul.pagination li:has(div.dropup)").first().find("ul");
-              var dropNext = $("ul.pagination li:has(div.dropup)").last().find("ul");
 
-              while (dropPrev.find("li").length || dropNext.find("li").length) {
-
-                console.log(dropPrev.find("li").length);
-                console.log(dropNext.find("li").length);
-
-                var showFirst = currentElement.nextAll("li:has(> a:not(.page-nav))").length >= currentElement.prevAll("li:has(> a:not(.page-nav))").length;
-                showFirst = showFirst && !dropPrev.find("li").length ? false : showFirst;
-                showFirst = !showFirst && !dropNext.find("li").length ? true : showFirst;
-
-                console.log(showFirst);
-
+              while (prevDropDown.find("ul > li").length || nextDropDown.find("ul > li").length) {
+                var prevFromCurrent = currentElement.prevAll("li:has(> a:not(.page-nav))");
+                var nextFromCurrent = currentElement.nextAll("li:has(> a:not(.page-nav))");
+                
+                var showFirst = nextFromCurrent.length > prevFromCurrent.length;
+                showFirst = showFirst && !prevDropDown.find("ul > li").length ? false : showFirst;
+                showFirst = !showFirst && !nextDropDown.find("ul > li").length ? true : showFirst;
+                
                 if (showFirst) {
-                  dropPrev.find("li").last().insertBefore(liPages.first());
-                  liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+                  var liFromDropDown = prevDropDown.find("ul > li").last().insertBefore(liPages.first());
                   pages = $(thisElement).find("> ul.pagination > li:visible");
+
                   if (pages.last().position().top > pages.first().position().top) {
-                    dropPrev.append(liPages.first());
+                    prevDropDown.find("ul").append(liFromDropDown);
                     break;
                   }
-                  dropPrev = $("ul.pagination li:has(div.dropup)").first().find("ul");
-                  if (!dropPrev.find("li").length) {
-                    $("ul.pagination li:has(div.dropup)").first().hide();
+
+                  if (!prevDropDown.find("ul > li").length) {
+                    prevDropDown.hide();
                   }
                 } else {
-                  dropNext.find("li").first().insertAfter(liPages.last());
-                  liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
+                  var liFromDropDown = nextDropDown.find("ul > li").first().insertAfter(liPages.last());
                   pages = $(thisElement).find("> ul.pagination > li:visible");
+
                   if (pages.last().position().top > pages.first().position().top) {
-                    dropNext.prepend(liPages.last());
+                    nextDropDown.find("ul").prepend(liFromDropDown);
                     break;
                   }
-                  dropNext = $("ul.pagination li:has(div.dropup)").last().find("ul");
-                  if (!dropNext.find("li").length) {
-                    $("ul.pagination li:has(div.dropup)").last().hide();
+
+                  if (!nextDropDown.find("ul > li").length) {
+                    nextDropDown.hide();
                   }
                 }
 
                 liPages = $(thisElement).find("> ul.pagination > li:visible > a:not(.page-nav)").parent("li:visible");
               }
             }
-
           },
 
           /**
@@ -516,6 +513,11 @@
             if (+loadedPage === totalPages) {
               $("#load-more").hide();
               $("ul.pagination > li a.page-next").parent("li").hide();
+            }
+
+
+            if (settings.paginationStyleFlexible) {
+              $(thisElement).trigger("resize", [true]);
             }
           }
         }
