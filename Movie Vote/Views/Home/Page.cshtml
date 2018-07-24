@@ -22,17 +22,13 @@
             <div class="panel-body">
                 <div class="display-wrapper">
                     <img class="img-medium movie-poster" src="~/Content/loading_dark.gif" />
-                    <div class="watched-container">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        @if (item.Watched.HasValue)
-                        {
+                    @if (item.Watched.HasValue)
+                    {
+                        <div class="watched-container">
+                            <span class="glyphicon glyphicon-eye-open"></span>
                             <span title="@item.Watched.ToString()"> @item.Watched.Value.ToShortDateString()</span>
-                        }
-                        else
-                        {
-                            <span title="2017-2018"> ?????</span>
-                        }
-                    </div>
+                        </div>
+                    }
 
                     <div class="movie-info">
                         <div class="row">
