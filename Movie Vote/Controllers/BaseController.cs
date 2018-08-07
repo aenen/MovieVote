@@ -21,6 +21,12 @@ namespace Movie_Vote.Controllers
                 ? (filterContext.RouteData.Values["lang"].ToString())
                 : cultureOnCookie;
 
+            if (cultureOnCookie == string.Empty)
+            {
+                HttpCookie httpCookie = new HttpCookie(_cookieLangName, GlobalHelper.DefaultCulture);
+                Response.Cookies.Add(httpCookie);
+            }
+
             if (cultureOnURL != culture)
             {
                 filterContext.HttpContext.Response.RedirectToRoute("LocalizedDefault",

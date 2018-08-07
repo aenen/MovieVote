@@ -18,7 +18,7 @@ namespace Movie_Vote.Controllers
 {
     public class MovieInfoController : ApiController
     {
-        private MovieContext db = new MovieContext();
+        private readonly MovieContext db = new MovieContext();
         private readonly string key = ConfigurationManager.AppSettings["TMDBAPIKey"];
 
         [Route("api/MovieInfo/Genres")]
