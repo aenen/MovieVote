@@ -23,12 +23,16 @@ namespace Movie_Vote.Controllers
 
             if (cultureOnCookie == string.Empty)
             {
-                HttpCookie httpCookie = new HttpCookie(_cookieLangName, GlobalHelper.DefaultCulture);
+                string selectedCulture = string.IsNullOrEmpty(filterContext.RouteData.Values["lang"].ToString()) ? GlobalHelper.DefaultCulture : filterContext.RouteData.Values["lang"].ToString();
+                HttpCookie httpCookie = new HttpCookie(_cookieLangName, selectedCulture);
                 Response.Cookies.Add(httpCookie);
             }
 
             if (cultureOnURL != culture)
             {
+                //HttpCookie httpCookie = new HttpCookie(_cookieLangName, cultureOnURL);
+                //Response.Cookies.Remove(_cookieLangName);
+                //Response.Cookies.Add(httpCookie);
                 filterContext.HttpContext.Response.RedirectToRoute("LocalizedDefault",
                 new
                 {
