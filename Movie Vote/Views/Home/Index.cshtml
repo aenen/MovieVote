@@ -96,7 +96,15 @@
                                         <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoGenres):</div>
                                         <div class="col-sm-8 col-xs-8 col-lg-8 movie-genre">-</div>
                                     </div>
-                                    <div class="description-wrapper">
+                                    <div id="watchLinks" class="row" hidden>
+                                        <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoWatch):</div>
+                                        <div class="col-sm-8 col-xs-8 col-lg-8">
+                                            <a class="watch-link-itunes" href="#">
+                                                <img src="@Url.GetImage("get-on-itunes.svg")" height="41" />
+                                            </a>
+                                        </div>                                        
+                                    </div>
+                                    <div class="description-wrapper" hidden>
                                         <hr />
                                         <div class="movie-description"></div>
                                     </div>

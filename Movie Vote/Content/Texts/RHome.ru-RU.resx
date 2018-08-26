@@ -171,6 +171,9 @@
   <data name="MovieInfoRelease" xml:space="preserve">
     <value>Релиз</value>
   </data>
+  <data name="MovieInfoWatch" xml:space="preserve">
+    <value>Смотреть</value>
+  </data>
   <data name="MovieTypeMovie" xml:space="preserve">
     <value>Фильм</value>
   </data>

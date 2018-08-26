@@ -223,6 +223,15 @@ namespace Movie_Vote.Content.Texts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Дивитись.
+        /// </summary>
+        public static string MovieInfoWatch {
+            get {
+                return ResourceManager.GetString("MovieInfoWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Фільм.
         /// </summary>
         public static string MovieTypeMovie {

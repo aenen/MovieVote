@@ -171,6 +171,9 @@
   <data name="MovieInfoRelease" xml:space="preserve">
     <value>Release</value>
   </data>
+  <data name="MovieInfoWatch" xml:space="preserve">
+    <value>Watch</value>
+  </data>
   <data name="MovieTypeMovie" xml:space="preserve">
     <value>Movie</value>
   </data>

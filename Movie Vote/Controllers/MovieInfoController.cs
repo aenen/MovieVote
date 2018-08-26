@@ -52,12 +52,7 @@ namespace Movie_Vote.Controllers
 
         JObject MovieData(Movie data)
         {
-            // тут створюється список мов по пріорітетності в залежності від обраної
-            // так, наприклад, якщо обрана російська мова, але опису фільму на цій мові немає, то завантажиться інформація на англійській
             string locale = BaseController.GetCultureOnCookie(new HttpRequestWrapper(HttpContext.Current.Request));
-            //List<string> langsList = new List<string> { "uk-UA", "ru-RU", "en-US" };
-            //int localeIndex = langsList.IndexOf(locale);
-            //langsList.RemoveRange(0, localeIndex);
 
             var client = new RestClient("https://api.themoviedb.org");
             var request = new RestRequest("3/search/{type}", Method.GET);
@@ -73,16 +68,12 @@ namespace Movie_Vote.Controllers
                     request.AddParameter("year", data.Year);
             }
 
-            //JObject json = null;
-            //foreach (var lang in langsList)
-            //{
-                request.AddParameter("language", locale);
-                JObject json = JObject.Parse(client.Execute(request).Content);
-                if (json["total_results"] == null)
-                    return json;
-                if (json["total_results"].Value<int>() > 0 && json["results"][0]["overview"].Value<string>() != "")
-                    return json;
-            //}
+            request.AddParameter("language", locale);
+            JObject json = JObject.Parse(client.Execute(request).Content);
+            if (json["total_results"] == null)
+                return json;
+            if (json["total_results"].Value<int>() > 0 && json["results"][0]["overview"].Value<string>() != "")
+                return json;
 
             return json;
         }

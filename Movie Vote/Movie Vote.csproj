@@ -126,7 +126,10 @@
     <Content Include="Content\icomoon\fonts\icomoon.svg" />
     <Content Include="Content\icomoon\style.css" />
     <Content Include="Content\favicon.png" />
+    <Content Include="Content\Images\en-US\get-on-itunes.svg" />
+    <Content Include="Content\Images\ru-RU\get-on-itunes.svg" />
     <Content Include="Content\Images\Russia.png" />
+    <Content Include="Content\Images\uk-UA\get-on-itunes.svg" />
     <Content Include="Content\Images\Ukraine.png" />
     <Content Include="Content\Images\United-States-of-America.png" />
     <Content Include="Content\loading.gif" />
@@ -248,8 +251,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\ru-RU\" />
-    <Folder Include="Content\Images\uk-UA\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Home\en-US\" />
     <Folder Include="Views\Home\ru-RU\" />
