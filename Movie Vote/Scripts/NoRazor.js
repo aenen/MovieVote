@@ -67,7 +67,7 @@ var initMovie = {
       $.getJSON("https://itunes.apple.com/search?media=tvShow&limit=1&term=" + movieName + "&country=" + country, function (data) {
         if (data.resultCount == 0) return;
 
-        $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[0].artistViewUrl);
+        $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[0].trackViewUrl);
         //data.results[0].artistViewUrl
       });
     }
@@ -105,7 +105,7 @@ var initMovie = {
       $.getJSON("https://itunes.apple.com/search?media=movie&limit=1&term=" + movieName + "&country=" + country, function (data) {
         if (data.resultCount == 0) return;
 
-        $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[0].artistViewUrl);
+        $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[0].trackViewUrl);
         //data.results[0].artistViewUrl
       });
     }
