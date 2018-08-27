@@ -64,11 +64,18 @@ var initMovie = {
       var self = this;
       var movieName = encodeURIComponent(result.original_name);
       var country = MultiLanguage.Cookies.getCookie("LangForMultiLanguage").slice(-2);
-      $.getJSON("https://itunes.apple.com/search?media=tvShow&limit=1&term=" + movieName + "&country=" + country, function (data) {
+      $.getJSON("https://itunes.apple.com/search?media=tvShow&limit=5&term=" + movieName + "&country=" + country, function (data) {
         if (data.resultCount == 0) return;
 
-        $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[0].trackViewUrl);
-        //data.results[0].artistViewUrl
+        for (var i = 0; i < data.resultCount; i++) {
+          var itunesReleaseDate = parseInt(data.results[i].releaseDate);
+          var tmdbReleaseDate = parseInt(result.first_air_date);
+
+          if (itunesReleaseDate == tmdbReleaseDate) {
+            $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[i].trackViewUrl);
+            break;
+          }
+        }
       });
     }
     else {
@@ -102,11 +109,18 @@ var initMovie = {
       var self = this;
       var movieName = encodeURIComponent(result.original_title);
       var country = MultiLanguage.Cookies.getCookie("LangForMultiLanguage").slice(-2);
-      $.getJSON("https://itunes.apple.com/search?media=movie&limit=1&term=" + movieName + "&country=" + country, function (data) {
+      $.getJSON("https://itunes.apple.com/search?media=movie&limit=5&term=" + movieName + "&country=" + country, function (data) {
         if (data.resultCount == 0) return;
 
-        $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[0].trackViewUrl);
-        //data.results[0].artistViewUrl
+        for (var i = 0; i < data.resultCount; i++) {
+          var itunesReleaseDate = parseInt(data.results[i].releaseDate);
+          var tmdbReleaseDate = parseInt(result.first_air_date);
+
+          if (itunesReleaseDate == tmdbReleaseDate) {
+            $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[i].trackViewUrl);
+            break;
+          }
+        }
       });
     }
     else {
