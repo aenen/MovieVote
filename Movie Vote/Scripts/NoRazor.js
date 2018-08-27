@@ -114,7 +114,7 @@ var initMovie = {
 
         for (var i = 0; i < data.resultCount; i++) {
           var itunesReleaseDate = parseInt(data.results[i].releaseDate);
-          var tmdbReleaseDate = parseInt(result.first_air_date);
+          var tmdbReleaseDate = parseInt(result.release_date);
 
           if (itunesReleaseDate == tmdbReleaseDate) {
             $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[i].trackViewUrl);
