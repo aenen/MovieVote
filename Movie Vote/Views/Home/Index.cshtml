@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoRelease):</div>
-                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-release">@(item.Year.HasValue? item.Year.ToString() : "-")</div>
+                                        <div class="col-sm-8 col-xs-8 col-lg-8 movie-release">@(item.Year.HasValue ? item.Year.ToString() : "-")</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoGenres):</div>
@@ -99,10 +99,10 @@
                                     <div id="watchLinks" class="row" hidden>
                                         <div class="col-sm-4 col-xs-4 col-lg-4">@(RHome.MovieInfoWatch):</div>
                                         <div class="col-sm-8 col-xs-8 col-lg-8">
-                                            <a class="watch-link-itunes" href="#">
+                                            <a class="watch-link-itunes" data-loaded="false" href="#">
                                                 <img src="@Url.GetImage("get-on-itunes.svg")" height="41" />
                                             </a>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                     <div class="description-wrapper" hidden>
                                         <hr />
@@ -257,6 +257,31 @@
                 var poster = panel.find(".movie-poster");
                 var watched = panel.find(".watched-container");
                 var info = panel.find(".movie-info");
+
+                var itunesLink = panel.find(".watch-link-itunes");
+                if (itunesLink.attr("data-loaded") == false && info.find(".movie-name").text()!="-") {
+                    var movieName = encodeURIComponent(info.find(".movie-name").text());
+                    var media = panel.attr("data-type") == "tv" ? "tvShow" : "movie";
+                    var country = culture.slice(-2);
+                    $.getJSON("https://itunes.apple.com/search?limit=4"
+                        + "&media=" + media
+                        + "&term=" + movieName
+                        + "&country=" + country, function (data) {
+
+                        itunesLink.attr("data-loaded", "true");
+                        if (data.resultCount == 0) return;
+
+                        for (var i = 0; i < data.resultCount; i++) {
+                            var itunesReleaseDate = parseInt(data.results[i].releaseDate);
+                            var tmdbReleaseDate = parseInt(info.find(".movie-release").text());
+
+                            if (itunesReleaseDate == tmdbReleaseDate) {
+                                $(info).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[i].trackViewUrl);
+                                break;
+                            }
+                        }
+                    });
+                }
 
                 if (info.is(":animated"))
                     return false;

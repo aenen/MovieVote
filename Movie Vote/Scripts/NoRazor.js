@@ -60,24 +60,7 @@ var initMovie = {
         }
       }
       if (genreStr !== "") genreStr = genreStr.slice(0, -2);
-      $(this).find(".movie-genre").text(genreStr);
-
-      var self = this;
-      var movieName = encodeURIComponent(result.original_name);
-      var country = MultiLanguage.Cookies.getCookie("LangForMultiLanguage").slice(-2);
-      $.getJSON("https://itunes.apple.com/search?media=tvShow&limit=5&term=" + movieName + "&country=" + country, function (data) {
-        if (data.resultCount == 0) return;
-
-        for (var i = 0; i < data.resultCount; i++) {
-          var itunesReleaseDate = parseInt(data.results[i].releaseDate);
-          var tmdbReleaseDate = parseInt(result.first_air_date);
-
-          if (itunesReleaseDate == tmdbReleaseDate) {
-            $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[i].trackViewUrl);
-            break;
-          }
-        }
-      });
+      $(this).find(".movie-genre").text(genreStr);      
     }
     else {
       $(this).find(".movie-poster").attr("src", "/Content/Images/" + culture + "/noposter.png");
@@ -106,23 +89,6 @@ var initMovie = {
       }
       if (genreStr !== "") genreStr = genreStr.slice(0, -2);
       $(this).find(".movie-genre").text(genreStr);
-
-      var self = this;
-      var movieName = encodeURIComponent(result.original_title);
-      var country = MultiLanguage.Cookies.getCookie("LangForMultiLanguage").slice(-2);
-      $.getJSON("https://itunes.apple.com/search?media=movie&limit=5&term=" + movieName + "&country=" + country, function (data) {
-        if (data.resultCount == 0) return;
-
-        for (var i = 0; i < data.resultCount; i++) {
-          var itunesReleaseDate = parseInt(data.results[i].releaseDate);
-          var tmdbReleaseDate = parseInt(result.release_date);
-
-          if (itunesReleaseDate == tmdbReleaseDate) {
-            $(self).find("#watchLinks").show().find(".watch-link-itunes").attr("href", data.results[i].trackViewUrl);
-            break;
-          }
-        }
-      });
     }
     else {
       $(this).find(".movie-poster").attr("src", "/Content/Images/" + culture + "/noposter.png");
