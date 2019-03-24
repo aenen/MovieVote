@@ -21,6 +21,11 @@ namespace Movie_Vote.Controllers
         private readonly MovieContext db = new MovieContext();
         private readonly string key = ConfigurationManager.AppSettings["TMDBAPIKey"];
 
+        public MovieInfoController()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+        }
+
         [Route("api/MovieInfo/Genres")]
         public JObject GetGenres()
         {
